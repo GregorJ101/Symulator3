@@ -1,4 +1,4 @@
-# ï Symulator/3 Readme
+# Symulator/3 Readme
 
 Symulator3 is an emulator for the IBM System/3, an early minicomputer/mainframe introduced in 1969 and marketed until 1985.  It is very well covered by Wikipedia here https://en.wikipedia.org/wiki/IBM_System/3, and by a private website here http://www.ibmsystem3.nl/.
 
