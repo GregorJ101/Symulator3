@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmulatorEngine", "EmulatorEngine\EmulatorEngine.csproj", "{8A1910C1-8142-47D0-AC13-6EDFFEDBF262}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S3UnitTest", "S3UnitTest\S3UnitTest.csproj", "{D3FECAAC-9D5D-4425-8977-5044217708E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptProcessor", "ScriptProcessor\ScriptProcessor.csproj", "{D51B78F2-17CD-405C-9525-FEDA53336D9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A1910C1-8142-47D0-AC13-6EDFFEDBF262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1910C1-8142-47D0-AC13-6EDFFEDBF262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1910C1-8142-47D0-AC13-6EDFFEDBF262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1910C1-8142-47D0-AC13-6EDFFEDBF262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3FECAAC-9D5D-4425-8977-5044217708E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3FECAAC-9D5D-4425-8977-5044217708E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3FECAAC-9D5D-4425-8977-5044217708E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3FECAAC-9D5D-4425-8977-5044217708E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51B78F2-17CD-405C-9525-FEDA53336D9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51B78F2-17CD-405C-9525-FEDA53336D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51B78F2-17CD-405C-9525-FEDA53336D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51B78F2-17CD-405C-9525-FEDA53336D9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
