@@ -1,0 +1,34 @@
+Sequence Diagram
+
+UI Thread                         Engine Thread
+    |  EmulatorEngine.Run () async call  |
+    | ---------------------------------> |
+    |                                    |
+    |   Event (breakpoint hit)           |
+    | <--------------------------------- |
+    |                                    |
+    |   Event (output string, reg, ...)  |
+    | <--------------------------------- |
+    |                                    |
+    |   Get outout (regular sync call)   |
+    | ---------------------------------> |
+    | <--------------------------------- |
+    |                                    |
+    |  EmulatorEngine.Terminate () sync  |
+    | ---------------------------------> |
+    | <--------------------------------- |
+    |                                    |
+    |  return from EmulatorEngine.Run () |
+    | <--------------------------------- |
+    |                                    |
+
+Async calls:
+- EmulatorEngine.Run ()
+- Run to next breakpoint
+- Abort / terminate execution
+- Disassemble object code
+
+Events:
+- New output string (DASM, Output, Trace)
+- Changed register value or condition register flag
+- Changed HPL or 5475 display

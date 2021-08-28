@@ -1,0 +1,904 @@
+DBCrdDataAllEndCards:
+  DBCrdDataAllEndCards
+  CardData
+  All End Cards
+
+DBCrdDataAscII:
+  DBCrdDataAscII
+  CardData
+  ASCII
+
+DBCrdDataBlckEcObjtxt:
+  DBCrdDataBlckEcObjtxt
+  CardData
+  BLCK_EC.OBJTXT
+
+DBCrdDataBlockLetters5x5:
+  DBCrdDataBlockLetters5x5
+  CardData
+  BlockLetters5x5
+
+DBCrdDataBlockProgramCharacters:
+  DBCrdDataBlockProgramCharacters
+  CardData
+  BlockProgramCharacters
+
+DBCrdDataDeckOfCards:
+  DBCrdDataDeckOfCards
+  CardData
+  DeckOfCards
+
+DBCrdDataExpanderECOBJTXT:
+  DBCrdDataExpanderECOBJTXT
+  CardData
+  Expander_EC.OBJTXT
+
+DBCrdDataHeaderDumpECOBJTXT:
+  DBCrdDataHeaderDumpECOBJTXT
+  CardData
+  HeaderDump_EC.OBJTXT
+
+DBCrdDataHxplEcObjtxt:
+  DBCrdDataHxplEcObjtxt
+  CardData
+  HXPL_EC.OBJTXT
+
+DBCrdDataHXPLTestInput:
+  DBCrdDataHXPLTestInput
+  CardData
+  HXPL Test Input
+
+DBCrdDataIBMDiagnosticsData:
+  DBCrdDataIBMDiagnosticsData
+  CardData
+  IBM_DiagnosticsData
+
+DBCrdDataIBMSet:
+  DBCrdDataIBMSet
+  CardData
+  IBM Set
+
+DBCrdDataIpl:
+  DBCrdDataIpl
+  CardData
+  IPL
+
+DBCrdDataIPLCardDumpECOBJTXT:
+  DBCrdDataIPLCardDumpECOBJTXT
+  CardData
+  IPLCardDump_EC.OBJTXT
+
+DBCrdDataIPLCards:
+  DBCrdDataIPLCards
+  CardData
+  IPLCards
+
+DBCrdDataIPLPRNTTestSecondary:
+  DBCrdDataIPLPRNTTestSecondary
+  CardData
+  IPL PRNT Test Secondary
+
+DBCrdDataMultiCardIPLLabelPairs:
+  DBCrdDataMultiCardIPLLabelPairs
+  CardData
+  MultiCardIPL&LabelPairs
+
+DBCrdDataPhoneMFCU:
+  DBCrdDataPhoneMFCU
+  CardData
+  Phone&MFCU
+
+DBCrdDataPinup:
+  DBCrdDataPinup
+  CardData
+  Pinup
+
+DBCrdDataPlayboyBunny:
+  DBCrdDataPlayboyBunny
+  CardData
+  Playboy Bunny
+
+DBCrdDataPowerOfTwoECOBJTXT:
+  DBCrdDataPowerOfTwoECOBJTXT
+  CardData
+  PowerOfTwo_EC.OBJTXT
+
+DBCrdDataPunchPatternCards:
+  DBCrdDataPunchPatternCards
+  CardData
+  PunchPatternCards
+
+DBCrdDataPunchPatternCardssmall:
+  DBCrdDataPunchPatternCardssmall
+  CardData
+  PunchPatternCards(small)
+
+DBCrdDataSingleCardIPLLabelGroupsData:
+  DBCrdDataSingleCardIPLLabelGroupsData
+  CardData
+  SingleCardIPL&LabelGroupsData
+
+DBCrdDataTextCards:
+  DBCrdDataTextCards
+  CardData
+  TextCards
+
+DBCrdDataTextJokeCards:
+  DBCrdDataTextJokeCards
+  CardData
+  TextJokeCards
+
+DBCrdDataTextLabelCards:
+  DBCrdDataTextLabelCards
+  CardData
+  TextLabelCards
+
+DBCrdDataTextRippleMaybe:
+  DBCrdDataTextRippleMaybe
+  CardData
+  TextRippleMaybe
+
+DBCrdDataTrigTablesECOBJTXT:
+  DBCrdDataTrigTablesECOBJTXT
+  CardData
+  TrigTables_EC.OBJTXT
+
+DBCrdIPL5475InterruptHaltDisplayI:
+  DBCrdIPL5475InterruptHaltDisplayI
+  CardObjectIPL
+  5475 INTERRUPT HALT DISPLAY I
+
+DBCrdIPL5475InterruptHaltDisplayII:
+  DBCrdIPL5475InterruptHaltDisplayII
+  CardObjectIPL
+  5475 INTERRUPT HALT DISPLAY II
+
+DBCrdIPL5475TypewriterProgramI:
+  DBCrdIPL5475TypewriterProgramI
+  CardObjectIPL
+  5475 TYPEWRITER PROGRAM I
+
+DBCrdIPL5475TypewriterProgramII:
+  DBCrdIPL5475TypewriterProgramII
+  CardObjectIPL
+  5475 TYPEWRITER PROGRAM II
+
+DBCrdIPL5475TypewriterProgramIII:
+  DBCrdIPL5475TypewriterProgramIII
+  CardObjectIPL
+  5475 TYPEWRITER PROGRAM III
+
+DBCrdIPLAbsoluteCardLoaderIPL:
+  DBCrdIPLAbsoluteCardLoaderIPL
+  CardObjectIPL
+  Absolute Card Loader IPL
+
+DBCrdIPLAbsoluteCoreDumpProgramIPL:
+  DBCrdIPLAbsoluteCoreDumpProgramIPL
+  CardObjectIPL
+  Absolute Core Dump Program IPL
+
+DBCrdIPLCardPunchPatternPrinterIPL:
+  DBCrdIPLCardPunchPatternPrinterIPL
+  CardObjectIPL
+  Card Punch Pattern Printer IPL
+
+DBCrdIPLCountingHaltProgramI:
+  DBCrdIPLCountingHaltProgramI
+  CardObjectIPL
+  COUNTING HALT PROGRAM I
+
+DBCrdIPLCountingHaltProgramII:
+  DBCrdIPLCountingHaltProgramII
+  CardObjectIPL
+  COUNTING HALT PROGRAM II
+
+DBCrdIPLCountingHaltProgramIII:
+  DBCrdIPLCountingHaltProgramIII
+  CardObjectIPL
+  COUNTING HALT PROGRAM III
+
+DBCrdIPLCountingHaltProgramIV:
+  DBCrdIPLCountingHaltProgramIV
+  CardObjectIPL
+  COUNTING HALT PROGRAM IV
+
+DBCrdIPLCountingHaltProgramV:
+  DBCrdIPLCountingHaltProgramV
+  CardObjectIPL
+  COUNTING HALT PROGRAM V
+
+DBCrdIPLCountingHaltProgramVI:
+  DBCrdIPLCountingHaltProgramVI
+  CardObjectIPL
+  COUNTING HALT PROGRAM VI
+
+DBCrdIPLCountingHexHaltProgramI:
+  DBCrdIPLCountingHexHaltProgramI
+  CardObjectIPL
+  COUNTING HEX HALT PROGRAM I
+
+DBCrdIPLCountingHexHaltProgramII:
+  DBCrdIPLCountingHexHaltProgramII
+  CardObjectIPL
+  COUNTING HEX HALT PROGRAM II
+
+DBCrdIPLCountingHexHaltProgramIII:
+  DBCrdIPLCountingHexHaltProgramIII
+  CardObjectIPL
+  COUNTING HEX HALT PROGRAM III
+
+DBCrdIPLCpuMemoryTest:
+  DBCrdIPLCpuMemoryTest
+  CardObjectIPL
+  CPU_&_MEMORY_TEST
+
+DBCrdIPLCpuMemoryTest2:
+  DBCrdIPLCpuMemoryTest2
+  CardObjectIPL
+  CPU_&_MEMORY_TEST2
+
+DBCrdIPLCpuMemoryTest3:
+  DBCrdIPLCpuMemoryTest3
+  CardObjectIPL
+  CPU_&_MEMORY_TEST3
+
+DBCrdIPLCPUMEMORYTESTnoMEM:
+  DBCrdIPLCPUMEMORYTESTnoMEM
+  CardObjectIPL
+  CPU_&_MEMORY_TEST_noMEM
+
+DBCrdIPLDialAdditionDisplay:
+  DBCrdIPLDialAdditionDisplay
+  CardObjectIPL
+  DIAL ADDITION DISPLAY
+
+DBCrdIPLDrumPrinterSimulatorI:
+  DBCrdIPLDrumPrinterSimulatorI
+  CardObjectIPL
+  DRUM PRINTER SIMULATOR I
+
+DBCrdIPLDrumPrinterSimulatorII:
+  DBCrdIPLDrumPrinterSimulatorII
+  CardObjectIPL
+  DRUM PRINTER SIMULATOR II
+
+DBCrdIPLExternalIndicatorControl:
+  DBCrdIPLExternalIndicatorControl
+  CardObjectIPL
+  EXTERNAL INDICATOR CONTROL
+
+DBCrdIPLExternalIndicatorReadout:
+  DBCrdIPLExternalIndicatorReadout
+  CardObjectIPL
+  EXTERNAL INDICATOR READOUT
+
+DBCrdIPLFileVentilatorI:
+  DBCrdIPLFileVentilatorI
+  CardObjectIPL
+  FILE VENTILATOR I
+
+DBCrdIPLFileVentilatorII:
+  DBCrdIPLFileVentilatorII
+  CardObjectIPL
+  FILE VENTILATOR II
+
+DBCrdIPLFiveCardKeyboardReadoutIPL:
+  DBCrdIPLFiveCardKeyboardReadoutIPL
+  CardObjectIPL
+  Five-Card Keyboard Readout IPL
+
+DBCrdIPLFormsPositionDisplayProgram:
+  DBCrdIPLFormsPositionDisplayProgram
+  CardObjectIPL
+  FORMS POSITION DISPLAY PROGRAM
+
+DBCrdIPLFourLineListSpaceProgram:
+  DBCrdIPLFourLineListSpaceProgram
+  CardObjectIPL
+  FOUR-LINE LIST/SPACE PROGRAM
+
+DBCrdIPLIBMDiagnostics:
+  DBCrdIPLIBMDiagnostics
+  CardObjectIPL
+  IBM_Diagnostics
+
+DBCrdIPLIplPunchConversionProgram:
+  DBCrdIPLIplPunchConversionProgram
+  CardObjectIPL
+  IPL PUNCH CONVERSION PROGRAM
+
+DBCrdIPLKeyboardAndHaltLampTest:
+  DBCrdIPLKeyboardAndHaltLampTest
+  CardObjectIPL
+  KEYBOARD AND HALT LAMP TEST
+
+DBCrdIPLKeyboardBinaryCounterI:
+  DBCrdIPLKeyboardBinaryCounterI
+  CardObjectIPL
+  KEYBOARD BINARY COUNTER I
+
+DBCrdIPLKeyboardBinaryCounterII:
+  DBCrdIPLKeyboardBinaryCounterII
+  CardObjectIPL
+  KEYBOARD BINARY COUNTER II
+
+DBCrdIPLKeyboardBinaryCounterIII:
+  DBCrdIPLKeyboardBinaryCounterIII
+  CardObjectIPL
+  KEYBOARD BINARY COUNTER III
+
+DBCrdIPLKeyboardBinaryCounterIV:
+  DBCrdIPLKeyboardBinaryCounterIV
+  CardObjectIPL
+  KEYBOARD BINARY COUNTER IV
+
+DBCrdIPLKeyboardBinaryCounterV:
+  DBCrdIPLKeyboardBinaryCounterV
+  CardObjectIPL
+  KEYBOARD BINARY COUNTER V
+
+DBCrdIPLKeyboardClockProgramI:
+  DBCrdIPLKeyboardClockProgramI
+  CardObjectIPL
+  KEYBOARD CLOCK PROGRAM I
+
+DBCrdIPLKeyboardClockProgramII:
+  DBCrdIPLKeyboardClockProgramII
+  CardObjectIPL
+  KEYBOARD CLOCK PROGRAM II
+
+DBCrdIPLKeyboardClockProgramIII:
+  DBCrdIPLKeyboardClockProgramIII
+  CardObjectIPL
+  KEYBOARD CLOCK PROGRAM III
+
+DBCrdIPLKeyboardClockProgramIV:
+  DBCrdIPLKeyboardClockProgramIV
+  CardObjectIPL
+  KEYBOARD CLOCK PROGRAM IV
+
+DBCrdIPLKeyboardClockProgramV:
+  DBCrdIPLKeyboardClockProgramV
+  CardObjectIPL
+  KEYBOARD CLOCK PROGRAM V
+
+DBCrdIPLKeyboardCompareIndicator:
+  DBCrdIPLKeyboardCompareIndicator
+  CardObjectIPL
+  KEYBOARD COMPARE INDICATOR
+
+DBCrdIPLKeyboardDataDecodeReadoutI:
+  DBCrdIPLKeyboardDataDecodeReadoutI
+  CardObjectIPL
+  KEYBOARD DATA DECODE READOUT I
+
+DBCrdIPLKeyboardDataDecodeReadoutII:
+  DBCrdIPLKeyboardDataDecodeReadoutII
+  CardObjectIPL
+  KEYBOARD DATA DECODE READOUT II
+
+DBCrdIPLKeyboardErrorCounterProgram:
+  DBCrdIPLKeyboardErrorCounterProgram
+  CardObjectIPL
+  KEYBOARD ERROR/COUNTER PROGRAM
+
+DBCrdIPLKeyboardHexadecimalClockI:
+  DBCrdIPLKeyboardHexadecimalClockI
+  CardObjectIPL
+  KEYBOARD HEXADECIMAL CLOCK I
+
+DBCrdIPLKeyboardHexadecimalClockII:
+  DBCrdIPLKeyboardHexadecimalClockII
+  CardObjectIPL
+  KEYBOARD HEXADECIMAL CLOCK II
+
+DBCrdIPLKeyboardHexadecimalCounter:
+  DBCrdIPLKeyboardHexadecimalCounter
+  CardObjectIPL
+  KEYBOARD HEXADECIMAL COUNTER
+
+DBCrdIPLKeyboardInterruptCounter:
+  DBCrdIPLKeyboardInterruptCounter
+  CardObjectIPL
+  KEYBOARD INTERRUPT COUNTER
+
+DBCrdIPLKeyboardSoundGenerator:
+  DBCrdIPLKeyboardSoundGenerator
+  CardObjectIPL
+  KEYBOARD SOUND GENERATOR
+
+DBCrdIPLKeyboardStorageDisplayI:
+  DBCrdIPLKeyboardStorageDisplayI
+  CardObjectIPL
+  KEYBOARD STORAGE DISPLAY I
+
+DBCrdIPLKeyboardStorageDisplayII:
+  DBCrdIPLKeyboardStorageDisplayII
+  CardObjectIPL
+  KEYBOARD STORAGE DISPLAY II
+
+DBCrdIPLKeyboardStorageDisplayIII:
+  DBCrdIPLKeyboardStorageDisplayIII
+  CardObjectIPL
+  KEYBOARD STORAGE DISPLAY III
+
+DBCrdIPLKeyboardStorageReadoutI:
+  DBCrdIPLKeyboardStorageReadoutI
+  CardObjectIPL
+  KEYBOARD STORAGE READOUT I
+
+DBCrdIPLKeyboardStorageReadoutII:
+  DBCrdIPLKeyboardStorageReadoutII
+  CardObjectIPL
+  KEYBOARD STORAGE READOUT II
+
+DBCrdIPLLoaderFormatVentilator:
+  DBCrdIPLLoaderFormatVentilator
+  CardObjectIPL
+  LOADER FORMAT VENTILATOR
+
+DBCrdIPLLoopingHaltProgram:
+  DBCrdIPLLoopingHaltProgram
+  CardObjectIPL
+  LOOPING HALT PROGRAM
+
+DBCrdIPLMagneticCoreStorageEraser:
+  DBCrdIPLMagneticCoreStorageEraser
+  CardObjectIPL
+  MAGNETIC CORE STORAGE ERASER
+
+DBCrdIPLMultipleListProgramI:
+  DBCrdIPLMultipleListProgramI
+  CardObjectIPL
+  MULTIPLE LIST PROGRAM I
+
+DBCrdIPLMultipleListProgramII:
+  DBCrdIPLMultipleListProgramII
+  CardObjectIPL
+  MULTIPLE LIST PROGRAM II
+
+DBCrdIPLMultipleListProgramIII:
+  DBCrdIPLMultipleListProgramIII
+  CardObjectIPL
+  MULTIPLE LIST PROGRAM III
+
+DBCrdIPLMultipleListProgramIV:
+  DBCrdIPLMultipleListProgramIV
+  CardObjectIPL
+  MULTIPLE LIST PROGRAM IV
+
+DBCrdIPLOneCard9696CompareProgram:
+  DBCrdIPLOneCard9696CompareProgram
+  CardObjectIPL
+  ONE-CARD 96/96 COMPARE PROGRAM
+
+DBCrdIPLOneCardCoreDumpProgram:
+  DBCrdIPLOneCardCoreDumpProgram
+  CardObjectIPL
+  ONE-CARD CORE DUMP PROGRAM
+
+DBCrdIPLOneCardGangPunchProgram:
+  DBCrdIPLOneCardGangPunchProgram
+  CardObjectIPL
+  One-Card GangPunch Program
+
+DBCrdIPLOneCardGangpunchProgramI:
+  DBCrdIPLOneCardGangpunchProgramI
+  CardObjectIPL
+  ONE-CARD GANGPUNCH PROGRAM I
+
+DBCrdIPLOneCardGangpunchProgramII:
+  DBCrdIPLOneCardGangpunchProgramII
+  CardObjectIPL
+  ONE-CARD GANGPUNCH PROGRAM II
+
+DBCrdIPLOneCardHaltCardCounter:
+  DBCrdIPLOneCardHaltCardCounter
+  CardObjectIPL
+  ONE-CARD HALT CARD COUNTER
+
+DBCrdIPLOneCardKeyboardCardCounter:
+  DBCrdIPLOneCardKeyboardCardCounter
+  CardObjectIPL
+  ONE-CARD KEYBOARD CARD COUNTER
+
+DBCrdIPLOneCardMessagePrinterI:
+  DBCrdIPLOneCardMessagePrinterI
+  CardObjectIPL
+  ONE-CARD MESSAGE PRINTER I
+
+DBCrdIPLOneCardMessagePrinterII:
+  DBCrdIPLOneCardMessagePrinterII
+  CardObjectIPL
+  ONE-CARD MESSAGE PRINTER II
+
+DBCrdIPLOperandSpeedTest:
+  DBCrdIPLOperandSpeedTest
+  CardObjectIPL
+  OPERAND SPEED TEST
+
+DBCrdIPLOperandSpeedTestAndDisplay:
+  DBCrdIPLOperandSpeedTestAndDisplay
+  CardObjectIPL
+  OPERAND SPEED TEST AND DISPLAY
+
+DBCrdIPLPageLineLocationDisplay:
+  DBCrdIPLPageLineLocationDisplay
+  CardObjectIPL
+  PAGE LINE LOCATION DISPLAY
+
+DBCrdIPLPowersOfTwoProgramI:
+  DBCrdIPLPowersOfTwoProgramI
+  CardObjectIPL
+  POWERS OF TWO PROGRAM I
+
+DBCrdIPLPowersOfTwoProgramII:
+  DBCrdIPLPowersOfTwoProgramII
+  CardObjectIPL
+  POWERS OF TWO PROGRAM II
+
+DBCrdIPLPowersOfTwoProgramIII:
+  DBCrdIPLPowersOfTwoProgramIII
+  CardObjectIPL
+  POWERS OF TWO PROGRAM III
+
+DBCrdIPLPowersOfTwoProgramIV:
+  DBCrdIPLPowersOfTwoProgramIV
+  CardObjectIPL
+  POWERS OF TWO PROGRAM IV
+
+DBCrdIPLPowersOfTwoProgramV:
+  DBCrdIPLPowersOfTwoProgramV
+  CardObjectIPL
+  POWERS OF TWO PROGRAM V
+
+DBCrdIPLPrntIpl:
+  DBCrdIPLPrntIpl
+  CardObjectIPL
+  PRNT-IPL
+
+DBCrdIPLRelocatingCardLoaderIPL1:
+  DBCrdIPLRelocatingCardLoaderIPL1
+  CardObjectIPL
+  Relocating Card Loader IPL 1
+
+DBCrdIPLRelocatingCardLoaderIPL2:
+  DBCrdIPLRelocatingCardLoaderIPL2
+  CardObjectIPL
+  Relocating Card Loader IPL 2
+
+DBCrdIPLRelocatingCardLoaderIPL3:
+  DBCrdIPLRelocatingCardLoaderIPL3
+  CardObjectIPL
+  Relocating Card Loader IPL 3
+
+DBCrdIPLRipplePrintProgram:
+  DBCrdIPLRipplePrintProgram
+  CardObjectIPL
+  RIPPLE PRINT PROGRAM
+
+DBCrdIPLSenseAddressBranch:
+  DBCrdIPLSenseAddressBranch
+  CardObjectIPL
+  SENSE ADDRESS BRANCH
+
+DBCrdIPLSenseHaltProgram:
+  DBCrdIPLSenseHaltProgram
+  CardObjectIPL
+  SENSE HALT PROGRAM
+
+DBCrdIPLSenseHaltProgramII:
+  DBCrdIPLSenseHaltProgramII
+  CardObjectIPL
+  SENSE HALT PROGRAM II
+
+DBCrdIPLSingleIPLcards:
+  DBCrdIPLSingleIPLcards
+  CardObjectIPL
+  SingleIPLcards
+
+DBCrdIPLSingleIPLcards1:
+  DBCrdIPLSingleIPLcards1
+  CardObjectIPL
+  SingleIPLcards1
+
+DBCrdIPLSingleIPLcards2:
+  DBCrdIPLSingleIPLcards2
+  CardObjectIPL
+  SingleIPLcards2
+
+DBCrdIPLSingleIPLcards3:
+  DBCrdIPLSingleIPLcards3
+  CardObjectIPL
+  SingleIPLcards3
+
+DBCrdIPLSingleIPLcards4:
+  DBCrdIPLSingleIPLcards4
+  CardObjectIPL
+  SingleIPLcards4
+
+DBCrdIPLSingleIPLcards5:
+  DBCrdIPLSingleIPLcards5
+  CardObjectIPL
+  SingleIPLcards5
+
+DBCrdIPLSingleIPLcards6:
+  DBCrdIPLSingleIPLcards6
+  CardObjectIPL
+  SingleIPLcards6
+
+DBCrdIPLSingleIPLcards7:
+  DBCrdIPLSingleIPLcards7
+  CardObjectIPL
+  SingleIPLcards7
+
+DBCrdIPLTextDeckSequencePunchProgram:
+  DBCrdIPLTextDeckSequencePunchProgram
+  CardObjectIPL
+  TEXT DECK SEQUENCE PUNCH PROGRAM
+
+DBCrdIPLThreeCardKeyboardReadoutIPL:
+  DBCrdIPLThreeCardKeyboardReadoutIPL
+  CardObjectIPL
+  Three-Card Keyboard Readout IPL
+
+DBCrdIPLVariableCoreStorageWriter:
+  DBCrdIPLVariableCoreStorageWriter
+  CardObjectIPL
+  VARIABLE CORE STORAGE WRITER
+
+DBCrdRpgBlockLetter:
+  DBCrdRpgBlockLetter
+  CardRPGiiSource
+  BlockLetter
+
+DBCrdRpgPathagorianTriples:
+  DBCrdRpgPathagorianTriples
+  CardRPGiiSource
+  PathagorianTriples
+
+DBCrdRpgPowerOfTwo:
+  DBCrdRpgPowerOfTwo
+  CardRPGiiSource
+  PowerOfTwo
+
+DBCrdRpgPowerOfTwo4Diff:
+  DBCrdRpgPowerOfTwo4Diff
+  CardRPGiiSource
+  PowerOfTwo4Diff
+
+DBCrdRpgPowerOfTwoOld:
+  DBCrdRpgPowerOfTwoOld
+  CardRPGiiSource
+  PowerOfTwoOld
+
+DBCrdRpgTrigTables:
+  DBCrdRpgTrigTables
+  CardRPGiiSource
+  TrigTables
+
+DBCrTextBlck:
+  DBCrTextBlck
+  CardObjectText
+  BLCK
+
+DBCrTextExpander:
+  DBCrTextExpander
+  CardObjectText
+  Expander
+
+DBCrTextHeaderDump:
+  DBCrTextHeaderDump
+  CardObjectText
+  HeaderDump
+
+DBCrTextHxpl:
+  DBCrTextHxpl
+  CardObjectText
+  HXPL
+
+DBCrTextIPLCardDump:
+  DBCrTextIPLCardDump
+  CardObjectText
+  IPLCardDump
+
+DBCrTextKbpl:
+  DBCrTextKbpl
+  CardObjectText
+  KBPL
+
+DBCrTextKbst:
+  DBCrTextKbst
+  CardObjectText
+  KBST
+
+DBCrTextKybd:
+  DBCrTextKybd
+  CardObjectText
+  KYBD
+
+DBCrTextMnemonicDump:
+  DBCrTextMnemonicDump
+  CardObjectText
+  MnemonicDump
+
+DBCrTextPllt:
+  DBCrTextPllt
+  CardObjectText
+  PLLT
+
+DBCrTextPltx:
+  DBCrTextPltx
+  CardObjectText
+  PLTX
+
+DBCrTextPowerOfTwo:
+  DBCrTextPowerOfTwo
+  CardObjectText
+  PowerOfTwo
+
+DBCrTextPowerOfTwoNewBuild1:
+  DBCrTextPowerOfTwoNewBuild1
+  CardObjectText
+  PowerOfTwo(NewBuild)_1
+
+DBCrTextPowerOfTwoNewBuild2:
+  DBCrTextPowerOfTwoNewBuild2
+  CardObjectText
+  PowerOfTwo(NewBuild)_2
+
+DBCrTextPowerOfTwoSingleEndCard:
+  DBCrTextPowerOfTwoSingleEndCard
+  CardObjectText
+  PowerOfTwo-SingleEndCard
+
+DBCrTextPrnt:
+  DBCrTextPrnt
+  CardObjectText
+  PRNT
+
+DBCrTextRemake:
+  DBCrTextRemake
+  CardObjectText
+  Remake
+
+DBCrTextTrace:
+  DBCrTextTrace
+  CardObjectText
+  Trace
+
+DBCrTextTrigTables:
+  DBCrTextTrigTables
+  CardObjectText
+  TrigTables
+
+DBCrTextTrigTablesNewBuild1:
+  DBCrTextTrigTablesNewBuild1
+  CardObjectText
+  TrigTables(NewBuild)_1
+
+DBCrTextTrigTablesNewBuild2:
+  DBCrTextTrigTablesNewBuild2
+  CardObjectText
+  TrigTables(NewBuild)_2
+
+DBCrTextTxlt:
+  DBCrTextTxlt
+  CardObjectText
+  TXLT
+
+DBCrTextType:
+  DBCrTextType
+  CardObjectText
+  TYPE
+
+DBDskNewPFtest:
+  DBDskNewPFtest
+  DiskCreatedImages
+  PFtest
+
+DBDskNewPRtest:
+  DBDskNewPRtest
+  DiskCreatedImages
+  PRtest
+
+DBDskOrg5702sc1V16scp:
+  DBDskOrg5702sc1V16scp
+  DiskOriginalImages
+  5702-sc1.V16.scp
+
+DBDskOrg5702Scp:
+  DBDskOrg5702Scp
+  DiskOriginalImages
+  5702SCP
+
+DBDskOrgf1f1f1:
+  DBDskOrgf1f1f1
+  DiskOriginalImages
+  f1f1f1
+
+DBScMacTestMacro:
+  DBScMacTestMacro
+  ScriptingMacros
+  TestMacro
+
+DBScrpt9696CompareTest:
+  DBScrpt9696CompareTest
+  SavedScripts
+  96-96 Compare Test
+
+DBScrpt9696CompareTest2:
+  DBScrpt9696CompareTest2
+  SavedScripts
+  96-96 Compare Test2
+
+DBScrpt9696ListTest:
+  DBScrpt9696ListTest
+  SavedScripts
+  96-96 List Test
+
+DBScrptAWS2DSKDumpScript:
+  DBScrptAWS2DSKDumpScript
+  SavedScripts
+  AWS2DSKDumpScript
+
+DBScrptBlck:
+  DBScrptBlck
+  SavedScripts
+  BLCK
+
+DBScrptIBMSetScript:
+  DBScrptIBMSetScript
+  SavedScripts
+  IBM Set Script
+
+DBScrptIPLcardGangPunchGroups:
+  DBScrptIPLcardGangPunchGroups
+  SavedScripts
+  IPLcardGangPunchGroups
+
+DBScrptIPLGangPunchTest:
+  DBScrptIPLGangPunchTest
+  SavedScripts
+  IPLGangPunchTest
+
+DBScrptIPLPRNTTestScript:
+  DBScrptIPLPRNTTestScript
+  SavedScripts
+  IPL PRNT Test Script
+
+DBScrptPower2DumpScript:
+  DBScrptPower2DumpScript
+  SavedScripts
+  Power2DumpScript
+
+DBScrptPrnt:
+  DBScrptPrnt
+  SavedScripts
+  PRNT
+
+DBScrptPrntDumpScript:
+  DBScrptPrntDumpScript
+  SavedScripts
+  PrntDumpScript
+
+DBScrptPunchPatternCards:
+  DBScrptPunchPatternCards
+  SavedScripts
+  PunchPatternCards
+
+DBScrptSingleCardIPLLabelGroups:
+  DBScrptSingleCardIPLLabelGroups
+  SavedScripts
+  SingleCardIPL&LabelGroups
+
+DBScrptSingleCardIPLLabelGroupsScript:
+  DBScrptSingleCardIPLLabelGroupsScript
+  SavedScripts
+  SingleCardIPL&LabelGroupsScript
+
+DBScrptSingleIPLCardTest:
+  DBScrptSingleIPLCardTest
+  SavedScripts
+  SingleIPLCardTest

@@ -1,0 +1,644 @@
+Symulator/3 WPF UI
+
+[ ] Implement code to use arrow keys to increment/decrement console-dials textbox control
+    [ ] Up arrow to increment single digit to right of flashing cursor (down arrow to decrement)
+    [ ] Wrap single-digit value (e.g. EF01 / 10FE)
+    [ ] Up arrow to increment entire 4-digit value when flashing cursor is at far right (down arrow to decrement)
+    [ ] Wrap four-digit value (e.g. FFFE, FFFF, 0000, 0001 / 0001, 0000, FFFF, FFFE )
+        https://stackoverflow.com/questions/7750505/how-to-get-and-set-current-cursor-position-of-wpf-textbox
+[ ] What happens after the first pass with PLTX to fuck things up?
+[ ] Test DASM with PLTX using ShowLinesAndTags () w/ emulator XR values and simulated XR values
+[ ] Suppress "<UNMATCHED LABEL>" in IPL Loader card and text end-card DASM listings
+[ ] Create new UnitTest test case for all text-card programs DASM cases
+    [ ] Add code to load primary & secondary hoppers
+    [ ] Load from database
+[ ] New approach for detecting code and data
+    [ ] Treat each new byte as an instruction if decodable
+        [ ] Save address of first decodable instruction
+        [ ] Save state of this instruction is at the start of the DASM area, following a J/B/L, or following data
+    [ ] Continue decoding instructions until either J/B/L[IAR] or byte not an opcode
+        [ ] If J/B/L, add address of first instruction as "CODE_" if not already in m_sdAllTags collection
+            [ ] If address already defined as "Jump", "Loop", or "Tag" use that label with the matching address
+        [ ] If not an opcode, save address of first "instruction" as "DATA_"
+    [ ] Add blank skip line to separate code segments ending with B / J / L[IAR]
+        [ ] Also separate code areas from data areas
+    [ ] Save start address of each new potential code segment
+        [ ] Do not to data dump until beginning of data segment confirmed by start of successfully disassembled code segment (prevent fragmented data dumps)
+    [ ] After first pass of new disassembler design, scan DASM code for all C2 LA instructions and look for following BC instructions
+        [ ] Replace XR values beginning @ BC LOOP targets and recalculate all address until the next C2 LA instruction
+[ ] Implement CDasmControlPoint
+    [ ] Add XR1 & XR2
+    [ ] IsRelocable to accomodate KBST
+    [ ] Create LoadControlPoints (string strProgramName)
+        [ ] Hard-coded list of CDasmControlPoint values
+    [ ] Create LoadControlPoints (string strProgramName, string strFilename)
+    [ ] Create StoreControlPoints (string strFilename)
+    [ ] Populate internal List<CDasmControlPoint> object
+    [ ] Add code to make only a single pass using DCPs if DCPs have been loaded
+[ ] Fix issue: DASM on TXLT w/ emulator XR values shows all data before 0x03AF
+[ ] Fix issue: SNS, BNE, L, TIO, MVI, LIO, BE, MVC, TBN, J, B missing AdCalc values in GUI version
+[ ] Fix issue: TXLT: operand addresses differ in indexed instructions
+[ ] For KBST:
+    [ ] Detect relocatable loader in text-compression code
+    [ ] Copy console dials value to 0x00E8 = 0x00E9
+    [ ] Add console dials value to destination address for each text card
+[ ] Fix Disassembler code, badly broken
+    [ ] Consider using FetchInstruction from EmulatorEngine.cs and filling List<int> (or SortedList<int,string> for IAR, mnemonic)
+        [ ] Don't execute instructions, just create list of valid JC/BC target address
+        [ ] When BC/JC instructions found, record destination address in another List or SortedList
+        [ ] Use this list in conjunction with m_sdAllTags to define all valid tag addresses
+        [ ] Anything not seen as instructions as data
+        [ ] Maintain another List or SortedList of address without instructions that do not follow a JC or BC
+            Any earlier instructions following the last previous JC/BC/L probably data
+        [ ] Possibly use this FetchInstruction approach only if <UNMATCHED LABEL> found in main program body, not IPL load card or text End cards
+    [ ] Why does using simulated values fix issues with PLTX in CalcAddress?
+    [ ] Create a byte array of the AbsoluteCardLoader and copying that to 0x0060 / 0x00FF before compressing text cards?
+    [ ] Experiment with commenting out the code that always sets as data all that follows an unconditional JC or BC
+[ ] Fix issue: grayed-line list gets reset while stepping through code in PRNT
+[ ] Step through PRNT and see what it does; consider renaming it
+[ ] Create an option "Run Until Next Grayed Line" (<ctrl>-F10?)
+    [ ] Allow suspending or continuing Trace lines
+    [ ] Allow hiding yellow current line or continually update it with each instruction execution
+[x] Add context menu "CardObjectText" items "IPL Load FreeRun" and "IPL Load Break" (for single-step just before branching to EndCard code)
+    [ ] Add code to ignore all cards until first card starting with "BA" is found, to skip the occasional title or "Remove Before Using" cards
+[ ] In CControlFlags, disable all I/O tracing bools after manually disabling trace; only re-enable after manually re-enabling trace again
+[ ] Add CTraceQueue member bool m_bIsSingleStep updated in UpdateOnly (); required for any of the Enqueue methods
+[ ] Add dialog box for selecting output folder for <ctrl>-S saving from DASM/Trace/Printer panels
+[ ] Integrate all dll projects into main exe project
+    [ ] Replace the compiler version project with the other version that create CompilerVersion.cs
+[ ] Create new listings w/end card & program body disassembly
+    [ ] KBST  Keyboard-to-Storage
+        [ ] Uses relocatable loader; expects loading address (from CPU dials) @ 0x00E8 - 0x00E9
+        [ ] Lots of "<UNMATCHED LABEL>" messages
+        [ ] Lots of code shown as data
+        [ ] Broken disassembly (compare to "KBST DASM 2.txt" in NotePad++)
+    [ ] KYBD  5475 Function Test
+        [ ] First card DASM totally broken
+    [ ] PLTX  Card IPL-to-Text Conversion Program
+        [ ] Lots of "<UNMATCHED LABEL>" messages (all go away when CalcAddress() uses simulated XR values instead of those from emulator)
+        [ ] Lots of code shown as data
+        [ ] "Jump to" labels shown in data sections
+    [ ] TXLT  Text-to-List Program
+        [ ] Lots of "<UNMATCHED LABEL>" messages
+        [ ] Lots of code shown as data
+    [x] BLCK  Block-Letter Printer
+    [x] HXPL  Hexadecimal to IPL-Punch Program
+    [x] KBPL  5475 Hex-to-IPL Punch
+        [x] Treats entry-point data as AZ instruction
+        [x] Fails on TIO @ 0x0033 (Secondary hopper empty; add single blank "card")
+    [x] PLLT  Card IPL-to-Hexadecimal List
+    [x] PRNT  (Card Punch-Pattern Print Program?)
+    [x] TYPE  Typewriter Program
+[ ] Add all to "NotePad++ IBMSystem3 Tabs ..." session file after all disassemble properly
+[ ] Test dynamic disassembly with my text-card machine language programs
+    [x] BLCK  Block-Letter Printer               
+    [x] HXPL  Hexadecimal to IPL-Punch Program   
+    [ ] KBPL  5475 Hex-to-IPL Punch              
+    [ ] KBST  Keyboard-to-Storage                
+    [ ] KYBD  5475 Function Test                 
+    [x] PLLT  Card IPL-to-Hexadecimal List       
+    [ ] PLTX  Card IPL-to-Text Conversion Program
+    [x] PRNT  (Card Punch-Pattern Print Program?)
+    [ ] TXLT  Text-to-List Program
+        [ ] Fix issue: "EE" halt not cleared after HPL instruction
+        [ ] Fix issue: Lots of "<UNMATCHED LABEL>" messages
+            Dynamically update XR values as LA instructions are found
+    [ ] TYPE  Typewriter Program                 
+[ ] Review handling 5471 keystrokes and use that model for the 5475 keyboard
+[ ] Add code to capture keystrokes for both System/3 5475 keyboard
+    [ ] Begin with accepting any queued-up keystrokes as keyboard input when 5475 SIO with Enable Interrupt executes
+    [ ] With a 5475 keystroke, switch to IAR[1] and gray-out IAR[0] control and label
+    [ ] Return to IAR[0] and gray-out IAR[1] when 5475 SIO with Reset Interrupt executes
+    [ ] After getting that working, accept 5475 keystroke only when interrupt enabled
+[ ] Add code to EmulatorEngine to locate and open database
+[ ] Fix issue: DASM doesn't properly create tags for some IPL programs (e.g. One-Card GangPunch Program)
+[ ] Try putting PrepForDASM settings into XAML; is PrepForDASM still needed?
+    [ ] Likewise preparation code for Trace and PrinterOutput panels
+[ ] See which versions of ProgramLoad () are used and where
+    [ ] Do they still work in UnitTest?
+[ ] Consider incremental DASM for stepping through card loaders:
+    [ ] Track low and high addresses of images of MVC targets
+    [ ] Trigger new DASM step when stepping through JC or BC out of current DASM image into new range; DASM new range
+    [ ] Keep repeating until all 6 cards are read (AbsoluteCardLoader) or 9 cards (RelocatableCardLoader)
+    [ ] Stop when branching into new image (0x0060 - 0x00FF for AbsoluteCardLoader)
+    [ ] Then do DASM for ox0060 - 0x00FF
+[ ] Treat SIO for anything with MFCU from an empty hopper or hopper without a file assigned to it as device-not-ready condition
+    [ ] Respond as the physical System/3 would
+[ ] Test boot from System/3 disk image; direct console output to PrinterOutput 
+    [ ] Later create new TextBox for 5471 console output in DASM panel
+[ ] ? Create separate treeview node for disk RPG PowersOfTwo object files ?
+[ ] Add code to implement breakpoints
+[ ] Adapt the "Show Text Cards as Hex" code to capture just the first 3 bytes (length and destination end address) to accumulate:
+    [ ] Lowest memory address
+    [ ] Highest memory address
+    [ ] Program entry point
+    [ ] Call this prior creating a DASM listing; use this information for determining begin & end of memory image to disassemble
+[ ] Add methods to support TreeView context menu:
+    [x] Output to Printer
+    [x] Show Card Punch Pattern
+    [x] Load Program and Single-Step
+    [x] Load Program and Dump (.txt)
+    [ ] Load Program and Dump (IPL) - restrict to 1-card programs; multi-card programs can be done manually
+    [x] Load Program and Disassemble (.txt)
+    [ ] Load Program and Disassemble (IPL) - restrict to 1-card programs; multi-card programs can be done manually
+    [x] Show Text Cards as Hex
+[ ] Enhance DASM to update instruction addresses during single-stepping as index registers are loaded or changed
+[ ] Create "TRACE" top menuitem to include all Trace bools; keep menu open like context menus?
+    [ ] Split m_bShowIOBuffers into m_bShowMFCUBuffers, m_bShowPrinterBuffer, m_bShowDiskBuffers, ...
+[x] Option to allow Trace to run in RunWithBreakPoints that only shows card images read by MFCU logic; show 96-column ruler only once
+    [ ] End when IAR == 0x0019 (branch into End card image) switch to single-step mode
+    [x] Show Printer buffer off by default
+[ ] Implement special dynamic disassembly cases:
+    [ ] Relocatable Card Loader
+[ ] Step through the Absolute Card Loader loading a small txt program and record the values in XR1 & XR2 when it branches into the end card
+    [ ] Use these values when disassembling to determine actual instruction addresses and address values in indexed instructions
+    [ ] See where it branches into compressed end-card image
+[ ] Fix issue: Trace doesn't always scroll to bottom after adding new line
+[ ] Handle all sources of ArgumentOutOfRangeExceptions
+[ ] Update register values in UI when breakpoints are triggered
+[ ] HelloWindows test projects:
+    [ ] Nested panels for placing bookmark sidebar inside vertical-scrollbar, but outside horizontal-scrollbar-controlled TestBox
+    [ ] Resizeable dialog box for displaying memory: receive notifications of new memory values from outside, but same project?
+[ ] Add code to capture keystrokes for both System/3 5471 keyboard
+[?] Create menu items for HexDump and DASM, 2 each: one for IPL, one for TXT, determined by the Access database table image loaded from
+
+[ ] Add to select output folder for all output files (DASM, Trace, Printer, stackers, ...) and persist in registry or elsewhere
+[ ] Create dialog box for showing card output (punch & print, all 4 stackers)
+[ ] Link F3 to search (?)
+[ ] Examine line-numbering code in the original CodeBox download: adapt for use as a breakpoint sidebar?
+[ ] Adapt CodeBox example for script editor?
+[ ] Use Pause key like <ctrl>-S, for toggling pause output to the Trace panel
+    [ ] TODO: Needs Render to be running in a separate thread
+[ ] Add <alt>-F5 for defining hex address, instruction count conditions for break or switch to single-step (dialog box)
+[ ] Create dialog box for dynamic memory viewing (changes to show recent memory changes w/ red text)
+    [ ] Allow direct memory editing?
+[ ] Output from 5471 when booting from disk:
+    [ ] Create an invisible textbox in the PrinterOutput panel for the 5471 output
+    [ ] Use <ctrl>-Tab to switch between printer and 5471 views
+    [ ] When showing 5471 control, rename header label to "5471 Output"
+    [ ] Expand <ctrl>-Tab to switch all panels, collapsing those that aren't to be shown
+        [ ] Select between MRU and fixed sequence as a setting the UI
+[ ] Add column to System/3 disk images for comments about what was changed
+[ ] Allow option to print all characters instead of just ASCII-defined characters (for the Ripple Print program)
+[ ] Handle DASM based on type of program loaded:
+    [ ] Run DASM upon loading single IPL cards
+    [ ] Use address to intercept execution after loading
+        [ ] 0x007C  0x0060  0x00FF  Branch into Absolute Card Loader
+        [ ] 0x00DB  0x0000  0x005F  Completion of one 4-byte to 3-byte compression pass
+        [ ] 0x0019  0x0100  0x01FF  Branch into end card instructions
+        [ ] 0x0019  0x0019  0x0057  End card
+        [ ] 0x0AA5  0x0D56  0x13FF  Main program
+    [ ] For multiple IPL cards, step through to determine when entire program image has been loaded
+        [ ] Possibly block on branch out of IPL card image on last card (0x0000 - 0x003F)
+    [ ] For my text card programs, break on branch out of end card image
+    [ ] While loading text card programs, accumulate lowest and highest memory addresses loaded for DASM address range
+[ ] Import brush selection code from WpfClockApp for PrintOutput, TreeViewDB, ...
+[ ] Try DBCrTextPowerOfTwoNewBuild1 and DBCrTextPowerOfTwoNewBuild2 after booting from System/3 disk image
+[ ] New keystroke command definitions:
+    [?] Add <ctrl>-F to initiate a search (if no text selected in DASM window, show dialog box for entering search text)
+    [x] Add F1 Show About box
+        Available anytime
+    [ ] Add F2 Find next bookmark
+        Requires a DASM listing in the DASM window
+        Requires at least one bookmark to be set
+    [ ] Add <shft>-F2 Find previous bookmark
+        Requires a DASM listing in the DASM window
+        Requires at least one bookmark to be set
+    [ ] Add <ctrl>-F2 Toggle bookmark
+        Requires a DASM listing in the DASM window
+        Requires a line to be selected (if not on a line with an address, the use the address of the closest addressible line about plus line count address)
+    [-] Add F3 Disassemble loaded program or find in DASM listing
+    [?] Add <shft>-F3 Reverse Find
+        Requires a DASM listing in the DASM window
+    [?] Add <ctrl>-F3 Set search string
+        Opens dialog unless some text has been selected in the DASM window
+        Requires a DASM listing in the DASM window
+    [-] Add F4 Hex dump of loaded program
+    [-] Add F5 Run with breakpoints
+        Requires a program to be loaded
+        If in Free run, then puts it into run-with-breakpoints mode
+        Does not require breakpoint to be set (?)
+    [x] Add <ctrl>-F5 Free run
+        Always available unless already in free-run
+        Requires a program to be loaded
+    [x] Add <shft>-F5 Stop run
+        Requires a program to be loaded
+        Only available when emulation running
+    [x] Add F6 Free run
+        Always available unless already in free-run
+        Requires a program to be loaded
+    [x] Add F7 Stop run
+        Requires a program to be loaded
+        Only available when emulation running
+    [x] Add F8 Unload Program (System Reset & write RAM above 0x0100)
+        Also stops execution if running
+    [ ] Add F9 Rotate breakpoint status (none / present / disabled)
+        Requires a DASM listing in the DASM window
+        Requires a line with an address to be selected
+        OK to access while program is running (like in VS)
+    [x] Add F10 Single-step
+        Requires a program to be loaded
+        If pressed while a program is running, stops at the next instruction to be executed
+    [x] Add F11 to toggle simulation of System/3 CPU clock speed (real speed, SetTestOneCardClockProgram (), SetSimulateSystem3CpuTiming ())
+        Always available
+        [-] Use code from IBM 1-card clock program as the benchmark standard for 1-second (run multiple times if necessary for accurate measurement)
+    [x] Add F12 to toggle trace output
+        [x] Write "- - - < S T A R T   T R A C E > - - -" and "- - - < S T O P    T R A C E > - - -" lines
+        [x] Allow Trace On only in single-step mode
+        [x] Allow Run and FreeRun on when Trace is off
+[ ] Design database table Sessions for saving details of "debugging" sessions
+    window position & size, pinned panels, breakpoints, bookmarks, ...
+[ ] Rework HPL & 5475 displays to activate individual segnemts instead of using the 7-segment font
+
+[x] Rerun DASM on TXLT w/ emulator XR values instead of simulated, then repeat comparing DASM listings
+[x] Compare dynamic disassembly with old UnitTest disassembly
+    [x] Look at Disassembler.cs dated 2021-06-04 ("D:\SoftwareDev\SacredCat\IBMSystem3\Data Files\CardDecksReadToFiles\Object - Text\Listings\KYBD DASM 4+.txt") v0.1.2.03
+    [x] Look at Disassembler.cs dated 2016-09-23 ("D:\SoftwareDev\SacredCat\IBMSystem3\Data Files\CardDecksReadToFiles\Object - Text\Listings\KBST DASM 2.txt")
+        "D:\SoftwareDev\Archive\System3\Symulator3\Symulator3 2016-09-23.zip"
+[x] Add code to update new IAR[0], IAR[1], ARR[0], and ARR[1] labels
+[x] Fix issue: F10 ignored when the focus is in x_txbCPUDials
+[x] Make certain that the plumbing is in place to get values from x_txbCPUDials to SNS for the CPU console dials
+[x] Add label to UI for IAR level 1 and ARR level 1 for keyboard interrupts
+    [x] Label as IAR[1]; rename old IAR to IAR[0], and ARR[0] and ARR[1]
+    [x] Adjust spacing on ARR, XR1, and XR2 labels to line them all up
+[x] Database issues: BLCK missing AbsoluteCardLoader card 5 (replace name in col. 89 - 92 w/ "BLCK")
+[x] Add List<string> objects for all 4 stackers for both card punch (96-column) and card print (128-column) output
+[x] Add code to write to these list objects in SIO code
+[x] Add code to create filenames for all 4 stackers for both card punch (96-column) and card print (128-column) output in current directory
+[x] Add code to write the List<string> object contents to them
+[-] Add code to write directly to these files in SIO code
+[x] Review trace starting and stopping
+    [x] Start on going from Run/FreeRun to SingleStep
+    [x] Show trace lines when trace show "On" in status bar
+    [x] Show "Start Trace" and "Stop Trace"
+    [x] Ensure no Trace lines saved while in FreeRun (also RunWithBreakPoints?)
+[x] Ensure shift out of single-step wipes unused-code list in CodeBox
+[x] Add code to reset HPL display after halt state exited
+[x] Fix issue: End card uses L instruction to branch to main body but ExecuteL has no code to handle the jump from End card to main program body
+[x] Implement line scrolling as necessary (test w/HXPL)
+    [-] When scrolling to a LOOP target that is off-screen, scroll to place LOOP at the top of the screen
+    [-] When scrolling to a JUMP target that is off-screen, scroll to place JUMP in the middle of the screen
+[x] Fix issue: OnLoadProgramDisassemble shows nothing for IPL programs (enable only for 1-card programs)
+[-] Clean up DASM code (variable names, rename methods & variables, unused methods, ...)
+[-] New dynamic disassembly design:
+    [x] Update new first-instruction address w/ each new tag dictionary entry
+    [-] Create separate methods for various working disassembler scenarios
+    [-] Create new bool variables based on their function (e.g. - m_bShowTagLabels, ...) instead of using complex bool combinations
+[x] Refactor DASM code into separate methods callable by right-click and double-click code
+[x] Fix issue: Multi-card IPL programs not save DASM to file for first card
+[x] Fix issue: Text card programs DASM panel not writing on <ctrl>-S
+[x] Fix issue: Load secondary hopper (if empty) shows even when it has cards loaded
+[x] Add code to collape load-hopper-if-empty context menu items when hopper not empty
+[x] Add context menu items to clear primary/seconday/both hoppers
+[x] Make sure all double-click and context-menu handlers behave the same way
+    [x] Write output to buffer
+    [x] Create filename for output to disk file
+    [x] Clear screen and output buffer before writing title to buffer
+    [x] Write buffer after all else is complete
+    [x] Test all double-click handlers
+        [x] x_menuOutputToPrinter
+        [x] x_menuLoadProgramDisassemble (single IPL card)
+        [x] x_menuLoadProgramDisassemble (multiple IPL card)
+        [x] x_menuLoadProgramDisassemble (text card program)
+            [x] Clear screen and output buffer before writing title to buffer
+    [x] Test all context-menu handlers
+        [x] x_menuOutputToPrinter
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuShowCardPunchPattern
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuLoadProgramHexDump (single IPL card)
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuLoadProgramHexDump (multiple IPL card)
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuLoadProgramHexDump (text card program)
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuLoadProgramDisassemble (single IPL card)
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuLoadProgramDisassemble (multiple IPL card)
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuLoadProgramDisassemble (text card program)
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuShowTextCardsAsHex (text card program)
+            [x] Clear screen and output buffer before writing title to buffer
+        [x] x_menuLoadInPrimaryHopper
+        [x] x_menuLoadInPrimaryHopperReplace
+        [x] x_menuLoadInPrimaryHopperAppend
+        [x] x_menuLoadInSecondaryHopper
+        [x] x_menuLoadInSecondaryHopperReplace
+        [x] x_menuLoadInSecondaryHopperAppend
+[x] Add code to replace main window title with  "Symulator/3 GUI <version>"
+[x] Fix issue: Clock IPL programs no longer work
+[x] Add code to store output lines to Trace panel in List<string> objects for writing to files
+    [x] TraceOutput files start with "TRACE_"
+[x] Add code to handle <ctrl>-S for writing output from:
+    [x] Trace panel
+    [x] PrinterOutput panel
+[x] Add code to buffer Trace output into single batches for each instruction executed
+    [x] Make all trace-related bools in CControlFlags private
+    [x] Create CTraceQueue.UpdateAndOutput () to write queued lines to Trace panel and update member trace-related bools from CControlFlags
+    [x] Make CTraceQueue.UpdateAndOutput () fire a single event to disable CodeBox Render (), send each line to CodeBox, then re-enable Render
+    [x] Call CTraceQueue.UpdateAndOutput () once for each instruction processed
+    [x] Create Add methods for each category of trace line conditioned by each trace-related bool
+    [x] Each Add method adds text to master List<string> for all lines sent to panel for writing to disk
+[x] Fix issue: OnLoadProgramHexDump dumps wrong range for text programs
+[x] Fix issue: OnLoadProgramHexDump dumps nothing for IPL programs
+[x] Add code to store output lines to PrinterOutput panel in List<string> objects for writing to files
+    [x] PrinterOutput files start with "PRINTER_"
+    [x] Create event for sending List<string> to printer panel instead of just single lines
+[x] Add code to load hoppers with files from database as appropriate for dynamically disassembling text programs
+    [x] Add code to return element 0 of List<string> loaded from database and then delete that element with each MFCU read SIO for that hopper
+    [x] Add code to respond to MFCU with device-not-ready status when hopper is empty
+    [x] SystemReset must clear the List<string> for each MFCU hopper
+[x] Why does AbsoluteCardLoader go into a loop reading when there's nothing to read?
+[x] Create ProgramLoadText () to use internal text-card compression code instead of IPL read
+[x] Test dynamic disassembly with my text-card machine language programs
+    [x] Add code-coverage to text-card program in single-step mode
+    [x] Treat end-card code image like first IPL card
+    [x] Disassemble main program body after stepping through end-card code and branching out of end-card code
+    [x] Use end card to determine main program entry point
+[x] Hide the disk-compiled PowersOfTwo and TrigTables in the TreeView
+[x] Only show grayed-out lines in CodeBox if program loaded and in single-step, not just for DASM listing
+    [x] Only show grey when appropriate to show the yellow highlight line
+[x] Add methods to store DASM & dump lists to text files:
+    [x] DASM_<file_name>_yyyy-mm-dd_hh-mm-ss.txt
+    [x] DUMP_<file_name>_yyyy-mm-dd_hh-mm-ss.txt
+    [x] <file_name> is the database filename with all spaces and non-alnum characters replaced with underscores
+    [x] Capture text directly from List<string> containers used to populate controls (List<string> m_lstrDisASM, ...)
+[x] Fix issue: Inserting program name breaks alignment with inst addr / line idx dictionary
+[x] Code for special case for AbsoluteCardLoader (0x0060 - 0x00FF)
+    Test 0x0000 - 0x0012 = C2010000 5C0BFF2B 5C076733 3A0F017E D000F4
+    Read 5 more cards & execute code on them
+    Then block on BC to 0x007C
+    DASM 0x0060 - 0x00FF, entry point 0x007C
+[x] How do text programs get loaded?
+    Using IPL read of Absolute Card Loader instead of internal text-card compression
+[x] Fix issue: queued up blank lines not getting cleared when running PowersOfTwo twice in succession
+[x] Clear grayed-out lines list in CodeBox when switching from single-step mode to FreeRun (also RunWithBreakPoints ?)
+    [x] Only create grayed-out lines list when doing first disassembly
+[x] Fix issue: DASM header lines don't show up in Release build
+[x] Fix issue: "Card Punch Pattern Printer IPL" doesn't show any code on 2nd DASM page
+[x] Fix issue: "PRNT-IPL" doesn't show any code on 2nd DASM page
+[x] Fix issue: "Card Punch Pattern Printer IPL" has missing tags in Destination column and multiple <UNMATCHED LABEL> calls in annotation column
+[x] Fix issue: In disassembling "Card Punch Pattern Printer IPL", XR1 is set to 0x0300 but that value is ignored in address calculations for main body, 2nd DASM
+[x] Test dynamic disassembly with multi-card IPL programs
+    [x] 4 cards: Card Punch Pattern Printer IPL
+    [x] 5 cards: Five-Card Keyboard Readout IPL
+    [x] 4 cards: PRNT-IPL
+    [x] 4 cards: Three-Card Keyboard Readout IPL
+[x] Fix issue: Tag count not reset when unloading a program and loading another
+[x] Fix issue: Tag count not reset after disassembling IPL loader card and disassembling main program body
+[x] Fix issue: Missing header for 2nd pass (main body of "Five-Card Keyboard Readout IPL")
+[x] Optimize DASM string list rendering by disabling rendering until all strings written
+[x] Add code to dynamically disassemble newly-loaded code for multi-card IPL programs
+    [x] Restrict to IPL load mode and card-count > 1
+    [x] Track lowest and highest address of new image when MVC target is outside 0000-003F range in all run modes
+    [x] Create new disassembly list when BC branches out of 0000-003F range to address between lowest and highest MVC range tracked
+    [x] Reset code-coverage tracking variables in SystemReset and ProgramUnload, and ... ?
+    [x] When BC leaves 0000-003F:
+        [x] Generate new disassembly using BC destination address as the entry point
+        [x] Create new code-coverage lines list
+        [x] Set IAR to BC destination
+        [x] Display new disassembly in DASM panel
+        [x] Break (all run modes) and set to Single-Step mode
+[-] Add DASM pre-pass to accumulate all loop values and determine the highest code address, where only data lies beyond
+[x] Add code-coverage tracking
+    [-] Link F4 to toggle code-coverage tracking
+    [x] Set gray highlight to each line in DASM panel with a hex-colon value in the address except for the one currently highlighted as current
+    [x] Create list of all lines with addresses, m_liInactiveLines
+    [x] As each line is highlighted as active, delete the line value from m_liInactiveLines
+[x] In single-step mode, don't block on HPL since it blocks anyway
+[x] Fix issue: rightmost dash in 2nd DASM line overwrites border in DASM panel when horizontal scrollbar is in use[x] Fix issue: Missing loop label ("001B: BC    D0 00 04,1       0x0004") in "COUNTING HEX HALT PROGRAM II" one-card program
+[x] Create InitializeDisASMPanel () with all necessary settings, call before writing output
+[x] Hide both scripting database notes in TreeView
+[x] Fix issue: Trace panel collapses when Enter pressed to exit HPL after switching from Single-Step to FreeRun
+[x] Fix issue: 0x7F shown in ASCII column in "data" lines in DASM display
+[x] Add columns for HPL and 5475 7-segment characters to "data" lines in DASM display
+[x] Fix issue: Highlighted line is incorrectly set on data before correctly showing new IAR from BC in "COUNTING HEX HALT PROGRAM II" one-card program
+[x] Add code to update CodeBox highlight position with each single-step
+[x] Fix issue: End key works in TraceOutput but not in the DASM panel
+[x] Add TreeView context menu:
+    [x] Output to Printer
+    [x] Show Card Punch Pattern
+    [x] Load Program and Single-Step
+    [x] Load Program and Dump
+    [x] Load Program and Disassemble
+    [x] Show Text Cards as Hex
+    [x] Load in Primary Hopper
+    [x] Load in Secondary Hopper
+    [x] Other menu items as needed
+[x] Why don't key commands always work w/o setting the focus to DASM window?
+[x] How to tell which control has the focus?  Send focus to specific controls when other specific controls receive focus?
+[x] Add key handlers for Home/End, PgUP/PgDn and up/down arrows for scrolling Trace panel
+    [x] PgUp/PgDn scroll up & down by the number of lines currently displayed
+[x] Add edit conrol to register display panel for CPU control values
+    [x] Accept input only when program paused
+    [x] Update internal CPU Dials value immediately
+[x] Why does the PowerOfTwo file end with a single record with a single '>' character?  To start the RPG cycle?
+    Not necessary for the version with the embedded end card which starts immediately
+[x] Reset instruction count and instruction count panel in status bar when exiting RunProgram, in UnloadProgram, and SystemReset
+[x] Test all processor check events in the GUI
+[x] Blank out strInstruction (populated before ExecuteInstrction) when not in single-step mode
+    [x] Test for blank after ExecuteInstruction and skip output until the next instruction when blank
+[x] Fix formatting of instruction timing: e.g. - "Timing: 99294760  99.295s (992 947 60)" = 992,947.60µs = 992.947ms
+[-] Replace testing m_bInTrace w/ IsInTrace () that verifies also that the emulator is in single-step mode
+[-] What causes the invalid op code processor checks in the PowersOfTwo programs? Fails same way in UnitTest
+[x] Manage Trace state in CEmulatorState class:
+    [x] Always on for single-step
+    [x] I/O buffers only for RunWithBreakPoints
+    [x] No Trace output for FreeRun
+    [x] All F12 to override
+[-] Trace only available in single-step mode, Run & FreeRun only available when Trace is off
+[-] Capture Pause key to put program into Pause state to be resumed with Enter key (like HPL), similar to physical System/3's Stop & Start CPU buttons
+    [-] <ctrl>-F5 / F6: FreeRun
+    [-] F5: Run with breakpoints
+    [-] Enter: resume like in HPL
+    [-] Esc: abort like in HPL
+[x] Try all 4 PowersOfTwo programs in UnitTest; if they work there, why not in the GUI?
+    Both DBCrTextPowerOfTwoNewBuild1 and DBCrTextPowerOfTwoNewBuild2 fail w/ invalid opcode processor check states
+    DBCrTextPowerOfTwo and DBCrTextPowerOfTwoSingleEndCard run successfully to completion
+[-] Why doesn't UnloadProgram leave the emulator in a clean state ready for the next program?
+[x] Add code to all event-firing method calls in RunProgram to make calls only when m_bAsyncRun is true
+[x] What happened to the killing of the trailing blank lines after PowersOfTwo?
+[x] Add code to CodeBoxControl to color-code HexDump output in DASM panel
+[x] System Reset crashes Symulator3
+[-] Examine docking code to see what controls are used to occupy space for the panels and associated vertical scroll bars
+    How to make the controls wider by the width of the scroll bar so the textbox has enough room for text without writing on the scroll bar
+[x] Collect colors from WpfClockApp colors menu in Photoshop for easy selection of backround, header, and side tab for DASM, Trace, and Printer panels
+[x] Revise color schemes with colors from ColorPalette test app
+        Panel               Header          Panel background / pull-out tab
+    [x] HexDumpAndDisASM                    BlanchedAlmond
+    [x] TraceOutput         SandyBrown      Moccasin
+    [x] PrinterOutput       LightSalmon     Wheat
+    [x] TreeViewDB          Salmon          PeachPuff
+[-] Use threading code for printer output as in test code?
+[x] Create alternate keystrokes for F#-defined actions:
+    [x] ShowAboutBox      = F1   <ctrl>-H  new KeyGesture (Key.H, ModifierKeys.Control)
+    [x] NextBookmark      = F2   <ctrl>-K  new KeyGesture (Key.N, ModifierKeys.Control)
+    [x] DASMandSearchNext = F3   <ctrl>-F  new KeyGesture (Key.F, ModifierKeys.Control)
+    [x] HexDump           = F4   <ctrl>-D  new KeyGesture (Key.D, ModifierKeys.Control)
+    [x] Run               = F5   <ctrl>-R  new KeyGesture (Key.R, ModifierKeys.Control)
+    [x] FreeRun           = F6   <ctrl>-E  new KeyGesture (Key.E, ModifierKeys.Control)
+    [x] Stop              = F7   <ctrl>-S  new KeyGesture (Key.S, ModifierKeys.Control)
+    [x] UnloadProgram     = F8   <ctrl>-U  new KeyGesture (Key.U, ModifierKeys.Control)
+    [x] RotateBreakpoint  = F9   <ctrl>-B  new KeyGesture (Key.B, ModifierKeys.Control)
+    [x] SingleStep        = F10  <ctrl>-I  new KeyGesture (Key.I, ModifierKeys.Control)
+    [x] ToggleCPUClock    = F11  <ctrl>-P  new KeyGesture (Key.P, ModifierKeys.Control)
+    [x] ToggleTrace       = F12  <ctrl>-T  new KeyGesture (Key.T, ModifierKeys.Control)
+[x] Reset CPU register values (and gray out) when chaning run mode to other than single-step
+    [x] Un-gray-out contruls when returning to single-step
+[x] Implement key commands
+    [x] Create state enum: FreeRun, RunWithBreakPoints, SingleStep
+    [x] F5 for run without stopping (supporting breakpoints later)
+    [x] F10 for single-stepping through code (pause after each System/3 instruction has been executed)
+        F10 while in either FreeRun or RunWithBreakPoints puts state into SingleStep and
+            breaks at the end of the currently executing instruction
+    [x] F11 (or some other key) toggles between full speed and simulation of System/3 clock speed
+[-] Why doesn't UnloadProgram call Stop () ?
+[x] When in single-step, reset HPL display with execution of next instruction
+[x] When not in single-step, reset HPL display with the keystroke that exits the HPL code
+[x] Gray out register values in UI when free-running
+[x] Add code to clear printer output pane
+[x] Why does pressing Esc in halt state take 4 seconds to change state to Aborted while F8 (UnloadProgram) has no delay?
+    (old code was sleeping for 2.5 seconds then throwing "Escape Key" exception)
+[x] Add I/O registers w/ToolTips for card, printer, disk
+    Add separators between each group of registers, grouped by device
+[x] Add StatusBar at the bottom of the window
+    [x] Name of program loaded
+    [x] Program state: running, halted, breakpoint, single-step, processor check (invalid op code, q byte, ...)
+    [x] Effective System/3 clock speed
+[x] When in HPL, Escape key means terminate simulator run (throw exception that gets caught by try around ExectuteInstruction ()
+[x] Display Intel clock speed and System/3 clock speed in UI
+[x] Add display of effective System/3 clock speed:
+    [x] 657,894.73 kHz or 9,266,123 mHz without artificial delays
+    [x] 993ms per clock program second w/ System3 Speed Simulation
+    [x] 61ms (?) per clock program second w/ adujstments for getting clock program timing close to 1 second
+    [-] Write average to status bar; test in debug & release builds
+[x] Add C++ project to get compiler version
+[x] Implement CCustomCommands for Enter and Escape keys
+[x] Create algorithm for converting actual Intel CPU speed to System/3 clock speed
+    [-] Repeat each instruction 1000 times for instruction speeds as source data
+[x] Calculate System/3 clock speed based on actual CPU clock speed (Core i7, Core i5, ...)
+    TestOneCardClockProgram:  1000ms - 938 = 62ms =                    (debug build in debugger)    Without delay: 41ms
+    TestOneCardClockProgram:  1000ms - 942 = 58ms =                    (debug build, no debugger)   Without delay: 26ms
+    TestOneCardClockProgram:  1000ms - 974 = 25ms = 658khz  657,895 Hz (release build, no debugger) Without delay:  9ms
+                                           657,895 Hz
+    No delay: 10,964,912 Hz @ 2,592,000,000 Hz (factor: 236.390)
+              41ms = (657,895 Hz / 41) * 1000 =  16,046,219 Hz =  16.046 mHz (factor 224.41) (debug build in debugger)
+              26ms = (657,895 Hz / 26) * 1000 = 253,036,576 Hz = 253.036 mHz (factor 142.31) (debug build, no debugger)
+               9ms = (657,895 Hz /  9) * 1000 = 730,994,555 Hz = 730.994 mHz (factor  49.26) (release build, no debugger)
+    m_uiCurrentClockSpeed (Core i7) = 3601 mHz
+[x] Display current simulated clock speed in UI
+[x] Add CPU data to about box (name/type, current & max clock speeds, ...)
+[x] Main (printer) output window to display Console.Write () and WriteLine () output
+[x] Register window to display current System/3 register values and condition register flags
+    [-] Use data-binding to update each control as its corresponding register value changes
+[x] Disable key input in DASM, Trace, and Printer panes
+[x] Only update registers in UI with single-step
+[x] Unprintable characters print as blanks on the 5203
+[x] Add code to show changed register values in UI in red when values change
+[x] Why don't the hot keys work (F1, ...)? (Problem caused by CSymulator3GUI.PreviewKeyDown () {e.Handled = true;} // Ignore keyboard input)
+[x] Make all database paths relative and move database to within the System3 folder
+[x] Add code to test for .NET 4.5
+
+// Status 2020-02-08
+// Changing color of specific text: TextBlocks and RichTextBoxes only
+// Adding lines with defined newlines: TextBlocks and TextBoxes (RTB either no line breaks or double-spaced lines)
+// Scrollbars only on TextBlocks and RichTextBoxes
+// Scrolling hidden text into view programmatically in TextBoxes only
+//   TextBlock is not a true Control, just a FrameworkElement
+
+[ ] Separate windows for:
+    [ ] Main DASM window w/current instruction pointer
+        [ ] Selectable colors for
+            [ ] Instruction Address
+            [ ] Nmemonics
+            [ ] Changed register values
+            [ ] Breakpoints
+        [ ] Set/clear/show breakpoints
+        [ ] DASM window shows current memory disassambled w/each change:
+            [ ] Programmatic changes
+            [ ] IO reads
+            [ ] Construction:
+                [ ] Panel to contain 3 windows:
+                    [ ] Left-most thin panel for setting and showing breakpoints (like Visual Studio)
+                    [ ] Next window (Rich-Text) to show line numbers (like Visual Studio)
+                    [ ] Right window (Rich-Text) to show all text
+                        [x] Background: light green (R:206 G:233 B:201)                                    #CEE9C9
+                            [x] Background for breakpoints (R:253 G:207 B:207)                             #FDCFCF
+                            [x] Background for disabled breakpoints (R:248 G:226 B:226)                    #F8E2E2
+                            [-] Background for current non-breakpoint line (R:236 G:254 B:85)              #ECFE55
+                            [-] Background for current breakpoint line (R:254 G:224 B:85)                  #FEE055
+                            [x] Background for active bookmark (R:0 G:198 B:255)                           #00C6FF
+                            [x] Background for disabled bookmark (R:0 G:239 B:255)                         #00EFFF
+                            [x] Background for current active line (R:236 G:254 B:85)                      #ECFE55
+                        [x] Different colors for mnemonics, labels, addresses, operand addresses, generated annotations, ...
+                            [x] Tags: orange (R:255 G:128 B:0)                                             #FF8000
+                            [x] Instruction addresses: red (R:255 G:0 B:0)                                 #FF0000
+                            [x] Mnemonics: blue (R:0 G:0 B:255)                                            #0000FF
+                            [x] Operand address & command codes: black (R:0 G:0 B:0)                       #000000
+                            [x] "0x...." data values: purple (R:139 G:0 B:164)                             #8B00A4
+                            [x] Annotation: dark green (R:0 G:128 B:0) (same as comments in Visual Studio) #008000
+                            [x] "data": magenta (R:255 G:0 B:255)                                          #FF00FF
+    [ ] Trace output window
+        [ ] Customizable colors (saved as themes)
+            [x] Background: light blue (R:201 G:221 B:233)                                                 #C9DDE9
+            [x] Step: teal (R:43 G:145 B:175)                                                              #2B91AF
+            [x] Mnemonics: blue (R:0 G:0 B:255)                                                            #0000FF
+            [x] Operand addresses & command codes: black (R:0 G:0 B:0)                                     #000000
+            [x] Instruction addresses & command codes: dark red (R:128 G:0 B:0)                            #800000
+            [x] Annotation: dark green (R:0 G:128 B:0) (same as comments in Visual Studio)                 #008000
+            [x] Register labels: purple (R:139 G:0 B:164)                                                  #8B00A4
+            [x] Register values: light purple (R:212 G:0 B:250)                                            #D400FA
+            [-] Changed register values: red (R:255 G:0 B:0)                                               #FF0000
+            [x] Timing: orange (R:255 G:128 B:0)                                                           #FF8000
+            [x] Operand labels: purple (R:139 G:0 B:164)                                                   #8B00A4
+            [x] Operand memory: magenta (R:255 G:0 B:255)                                                  #FF00FF
+            [-] Changed memory: red (R:255 G:0 B:0)                                                        #FF0000
+            [-] Reset condition register flags: gray (R:128 G:128 B:128)                                   #808080
+    [ ] Script window for stepping through script commands
+    [ ] All registers including all I/O registers
+        [ ] Highlight changed values in red (default)
+        [ ] Reset highlighting with each instruction
+    [ ] All main memory w/navigation to specific locations
+        [ ] Red highlight (default) for values changed by instructions or input from I/O devices
+        [ ] Green highlight (default) for values written out to I/O devices
+    [ ] Watch windows
+        [ ] Highlight changed values in red (default)
+    [ ] Auto variable window for only locations that changed
+    [ ] Allow highlighting colors to be changed
+    [x] Halt display window
+    [ ] 5475 Keyboard window w/columns, Prog1, Prog2, Error indicators
+        Switch settings: Program Switch, Auto Record Release Switch,
+                         Auto Skip/Dup Switch, Print Switch
+    [ ] I/O buffer windows for each input device
+    [ ] Input file windows for each loaded file on card or disk
+        w/pointer to last read record
+    [ ] Device output windows:
+        [ ] 5471 console dialog w/REQ & PROCEED indicators
+        [ ] Printer
+        [ ] Card window for each hopper
+        [ ] Disk for each output file
+[ ] Resizable, moveable, dockable windows, VS-style
+    [ ] Get example from "WPF 4.5 Unleashed" working
+    [ ] Download & try out Rich Editor projects
+        [ ] Add code to selectively change font, font size, font color & background color
+[ ] Ability to define variables: name, location, length, start/stop
+[ ] Support conditional breakpoints
+[ ] Persist breakpoints for future sessions
+
+===================================================================================================
+Visual Studio interface
+- Main window / resizable panes above & below
+   > DASM / debugger window
+   > Output windows (printer, card, disk, 5471 w/color setting for user input & system output) text or hex w/ & w/o test
+- Panes on left
+   > Register values
+   > Halt display (7-segment font, 14-segment font, or graphically generated image)
+   > 5475 display (7-segment font, 14-segment font, or graphically generated image)
+   > Option settings (which windows to show, stop on halt, 5475 panel switches, show breakoints, enable/disable all breakpoints)
+- Panes below
+   > Breakpoints list (persist)
+   > All main memory w/navigation to specific locations
+   > Watch windows
+   > Auto variable window for only locations that changed
+- Persist UI settings & layout (allow saving workspace layouts & file/breakpoint values for different sessions)
