@@ -1,0 +1,77 @@
+﻿Design Notes
+
+Status 2020-02-08
+- Changing color of specific text: TextBlocks and RichTextBoxes only
+- Adding lines with defined newlines: TextBlocks and TextBoxes (RTB either no line breaks or double-spaced lines)
+- Scrollbars only on TextBlocks and RichTextBoxes
+- Scrolling hidden text into view programatically in TextBoxes only
+
+- TextBlock is not a true Control, just a FrameworkElement
+
+Windows to populate
+- Database tree
+  > Card Data
+  > Card Object IPL
+  > Card Object Text
+  > Disk Created Images
+  > Disk Original Images
+  > File Master
+  > File Tokens
+  > Saved Scripts
+  > Script Macros
+- DASM
+- Trace
+- Script (highlight strp/command currently running)
+- Program output: printed
+- Program output: MFCU punch (stackers 1 - 4)
+- Program output: MFCU print (stackers 1 - 4)
+- Registers (CPU & I/O)
+- HALT (showing actual bits mapped to segments
+- 5475 column indicators (showing actual bits mapped to segments
+- Breakpoint list (by hex IAR address)
+- Memory watch by specific addresses
+- Changed memory (automatically update address with each instruction that changes memory (MVC, ALC, ...; data read from card or disk)
+
+GUI items to implement:
+  [ ] Fixed menu bar
+  [ ] Relocatable toolbar (like in Visual Studio, Sound Forge, ...)
+  [ ] StatusBar
+  [ ] Ribbon control (?)
+  [ ] WPF Commands
+
+Menu options
+- File
+  > Load program / data file / script file on disk
+  > Load program / data file / script file from database
+  > Add/update program / data file / script file to database
+  > Dump / disassemble program / data file from file / database
+- Disassembly settings (all available internal flags)
+- Trace settings (all available internal flags)
+- Simulate System/3 CPU speed
+- Debug
+  > Set / suspend / remove breakpoints
+  > Run uninterrupted
+  > Run to breakpoint
+  > Run to cursor
+  > Step instruction
+
+Script language
+
+Use Cases
+- Initial display population
+  > Read database to create directory tree
+- Hex dump from file path
+- Hex dump from database
+- Text card dump from file path
+- Text card dump from database
+- Disassembling from file path
+- Disassembling from database
+- Show card punch patterns from file path
+- Show card punch patterns from database
+- Set up script or macro
+- Test new or changed script or macro (debug with diagnostic messages)
+- Save script to database
+- Save script to disk file
+- Load script in preparation for running (disk file)
+- Load script in preparation for running (database)
+- Run script or macro

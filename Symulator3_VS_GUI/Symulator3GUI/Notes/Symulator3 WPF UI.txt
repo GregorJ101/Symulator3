@@ -1,0 +1,220 @@
+Symulator3 WPF UI
+
+- Blocks / learning curves / study topics:
+  [ ] WPF panels
+  [ ] WPF Commands
+  [ ] Entity Framework / LINQ & populating tree control
+  [ ] WPF Triggers: what are they?  can they be used to update the UI controls?
+  [?] Data binding
+  [x] Invoke.Dispatch / delegates / static methods
+  [x] Updaating UI controls from EmulatorEngine thread
+  [x] Lambda functions
+      (explicitly-typed-parameter-list) => { statements }
+      (explicitly-typed-parameter-list) => expression // Curly braces are optional in a simple case
+      text => text.Length // Parenthesis are optional when only a single parameter is used
+
+[x] Finish updating AboutBox
+    [x] Add text to show string from compiler version details from CompilerVersion.cs
+    [x] Create snapshot
+    [x] Create CleanAllProjects.cmd for single-click solution cleaning
+    [x] Add GetMscVer.dll
+    [-] Add ILMerge Post-Build step
+    [x] Replace text from CompilerVersion.cs with GetMscVer.dll
+    [x] Add Debug.Assert to test equality of MscVer from CompilerVersion.cs and GetMscVer.dll
+    [x] Replace short compiler version number with long version
+[ ] Put TreeView in a resizeable dialog box launched from the File name instead of trying to squeeze it into the main window (?)
+[ ] Rename buttons & panels & event handler code to my liking
+[ ] Add events & handlers for all I/O registers (re-use Database Tree pane since tree control won't be needed during program execution)
+    [ ] MFCU
+    [ ] Disk
+    [ ] Printer
+    [ ] 5475 Keyboard
+    [ ] 5471 Keyboard
+[ ] Add "5471" / "Scripting" pane shared vertically in the "Printer Output" pane hidden by default    
+[ ] Set rect to designed max line width for each output pane (get the width from the emulator engine)
+[ ] Fix issue: Trace output writes right-most characters over vertical scrollbar
+[ ] Fix issue: DASM output truncates rightmost 2 characters when window size is reduced enough to produce horizontal scrollbar
+    Similar to Trace issue above, slightly different presentation details
+[ ] Code highlighting currently selected line like in VS (white rectangle)
+[ ] Extend currently selected line & current execution line to cover entire window width
+[ ] Get left breakpoint / bookmark column working properly, including handling scrolling on both axes
+[ ] Create 7-segment control using rectangles for each segment
+    [ ] Create separate 7-segment bit-to-segment mapping for HPL and 5475
+    [ ] Add code to convert byte to pair of values for displaying in HPL and 5475 7-segment displays using a lookup table
+[ ] Add menu options to:
+    [ ] Save DASM pane to file
+    [ ] Save Printer Output pane to file
+    [ ] Save Trace pane to file
+    [ ] Save Trace output to file as pane is being filled
+[x] Add About box (with icon)
+[x] If the window is maximized, don't save dimensions
+    [x] On restore, restore dimensions from registry, then set as maximized
+[x] Which is better: sending entire condition register byte, or individual flags as bools? Entire byte
+[x] Swap "Trace Output" & "Printer Output" panes
+[x] Compare all the alternate solutions ("... (good)", "... (thread issue)", etc.)
+    [x] Delete all that are obsolete, saving any useful code
+[x] Fix cross-thread UI control access issues
+[x] Re-add most recent version of UnitTest project (not as start-up project), matching product version
+[-] Try using a timer to trigger updating UI controls in main UI thread (kludge)
+[x] Create variables and constants for starting points and lengths for color-coding strings to replace magic numbers
+[x] Change Trace window colors
+    [-] Background: shift toward green, make a bit darker
+    [x] Change Timing: darker, more red in the color mix
+[x] Add code to save & restore window size & position
+[x] Add Bookmark code to older version with working Breakpoint code
+[x] Embed 7-segment font for HPL & 5475 displays like WPF Clock
+[x] Create version file w/ details from first 3 versions
+[x] Create versioning scheme
+[x] Try setting line width in FormattedText to match window width for text wrapping
+[x] Change color in area at top of "Trace Output" pane to match the breakpoint/bookmark column #99B4D1
+
+-  Interesting problems resolved:
+   > Got CodeBox to color by column instead of keyword
+   > Resolved CodeBox text-wrapping issue
+   > Learned to use async & await C# keywords for simpler way to create threads
+   > Got events working for getting data from EmulatorEngine back to UI thread
+   > Got UI controls updating from EmulatorEngine thread using Dispatcher and Lambda expressions
+   > Got how simple and useful Lambda expressions are
+
+[x] Buttons in left column:
+    [x] Breakpoint symbols
+        [x] Enabled   Solid red circle
+        [x] Disabled  Red circle Outline
+    [x] Bookmark symbols
+        [x] Enabled   Solid blue thin rectangle (doesn't hide breakpoint circle, solid or hollow)
+        [x] Disabled  Blue rectangle outline
+
+[ ] Add splitters
+    [ ] Left of DASM window
+    [ ] Between HPL / 5475 window and registers window
+    [ ] Between registers window and database tree
+
+[ ] Populate database window with treeview showing all available entries in database including sessions
+
+[ ] Create async methods for
+    [ ] Getting HPL display values
+    [ ] Getting 5475 display values
+    [ ] Getting values for each register, seaparate methods for each register
+    [ ] Getting new strings for DASM window
+    [ ] Getting new strings for Trace window
+    [ ] Getting new strings for Output window
+    [ ] Getting next breakpoint
+    [ ] Getting next bookmark
+    [ ] Loading program or data from database
+
+[ ] First steps
+    [ ] Main output window to display Console.Write () and WriteLine () output
+    [ ] Register window to display current System/3 register values and condition register flags
+        [ ] Use data-binding to update each control as its corresponding register value changes
+    [ ] Implement key commands
+        [ ] F2 for navigating to next bookmark in current document
+        [ ] <shft>-F2 for navigating to previous bookmark in current document
+        [ ] <ctrl>-F2 for setting, disabling, and deleting bookmarks (cycling through each state on currently selected line)
+        [ ] F5 for run without stopping (supporting breakpoints later)
+        [ ] <shft>-F5 for ending execution in degugging session
+        [ ] <ctrl>-F5 for start executiong ignoring any breakpoints
+        [ ] F9 for setting, disabling, and deleting breakpoints (cycling through each state on currently selected line)
+        [ ] F10 for single-stepping through code (pause after each System/3 instruction has been executed)
+
+// Status 2020-02-08
+// Changing color of specific text: TextBlocks and RichTextBoxes only
+// Adding lines with defined newlines: TextBlocks and TextBoxes (RTB either no line breaks or double-spaced lines)
+// Scrollbars only on TextBlocks and RichTextBoxes
+// Scrolling hidden text into view programmatically in TextBoxes only
+//   TextBlock is not a true Control, just a FrameworkElement
+
+[ ] Separate windows for:
+    [ ] Main DASM window w/current instruction pointer
+        [ ] Selectable colors for
+            [ ] Instruction Address
+            [ ] Nmemonics
+            [ ] Changed register values
+            [ ] Breakpoints
+        [ ] Set/clear/show breakpoints
+        [ ] DASM window shows current memory disassambled w/each change:
+            [ ] Programmatic changes
+            [ ] IO reads
+            [ ] Construction:
+                [ ] Panel to contain 3 windows:
+                    [x] Left-most thin panel for setting and showing breakpoints (like Visual Studio)
+                    [-] Next window (Rich-Text) to show line numbers (like Visual Studio)
+                    [ ] Right window (Rich-Text) to show all text
+                        [x] Background: light green (R:206 G:233 B:201)                                    #CEE9C9
+                            [-] Background for breakpoints (R:253 G:207 B:207)                             #FDCFCF
+                            [-] Background for disabled breakpoints (R:248 G:226 B:226)                    #F8E2E2
+                            [-] Background for current non-breakpoint line (R:236 G:254 B:85)              #ECFE55
+                            [-] Background for current breakpoint line (R:254 G:224 B:85)                  #FEE055
+                            [-] Background for active bookmark (R:0 G:198 B:255)                           #00C6FF
+                            [-] Background for disabled bookmark (R:0 G:239 B:255)                         #00EFFF
+                            [x] Background for current active line (R:236 G:254 B:85)                      #ECFE55
+                        [x] Different colors for mnemonics, labels, addresses, operand addresses, generated annotations, ...
+                            [x] Tags: orange (R:255 G:128 B:0)                                             #FF8000
+                            [x] Instruction addresses: red (R:255 G:0 B:0)                                 #FF0000
+                            [x] Mnemonics: blue (R:0 G:0 B:255)                                            #0000FF
+                            [x] Operand address & command codes: black (R:0 G:0 B:0)                       #000000
+                            [x] "0x...." data values: purple (R:139 G:0 B:164)                             #8B00A4
+                            [x] Annotation: dark green (R:0 G:128 B:0) (same as comments in Visual Studio) #008000
+                            [x] "data": magenta (R:255 G:0 B:255)                                          #FF00FF
+    [ ] Trace output window
+        [ ] Customizable colors (saved as themes)
+            [x] Background: light blue (R:201 G:221 B:233)                                                 #C9DDE9
+            [x] Step: teal (R:43 G:145 B:175)                                                              #2B91AF
+            [x] Mnemonics: blue (R:0 G:0 B:255)                                                            #0000FF
+            [x] Operand addresses & command codes: black (R:0 G:0 B:0)                                     #000000
+            [x] Instruction addresses & command codes: dark red (R:128 G:0 B:0)                            #800000
+            [x] Annotation: dark green (R:0 G:128 B:0) (same as comments in Visual Studio)                 #008000
+            [x] Register labels: purple (R:139 G:0 B:164)                                                  #8B00A4
+            [x] Register values: light purple (R:212 G:0 B:250)                                            #D400FA
+            [-] Changed register values: red (R:255 G:0 B:0)                                               #FF0000
+            [x] Timing: orange (R:255 G:128 B:0)                                                           #FF8000
+            [x] Operand labels: purple (R:139 G:0 B:164)                                                   #8B00A4
+            [x] Operand memory: magenta (R:255 G:0 B:255)                                                  #FF00FF
+            [-] Changed memory: red (R:255 G:0 B:0)                                                        #FF0000
+            [-] Reset condition register flags: gray (R:128 G:128 B:128)                                   #808080
+    [ ] Script window for stepping through script commands
+    [ ] All registers including all I/O registers
+        [ ] Highlight changed values in red (default)
+        [ ] Reset highlighting with each instruction
+    [ ] All main memory w/navigation to specific locations
+        [ ] Red highlight (default) for values changed by instructions or input from I/O devices
+        [ ] Green highlight(default) for values written out to I/O devices
+    [ ] Watch windows
+        [ ] Highlight changed values in red (default)
+    [ ] Auto variable window for only locations that changed
+    [ ] Allow highlighting colors to be changed
+    [ ] Halt display window
+    [ ] 5475 Keyboard window w/columns, Prog1, Prog2, Error indicators
+        Switch settings: Program Switch, Auto Record Release Switch,
+                         Auto Skip/Dup Switch, Print Switch
+    [ ] I/O buffer windows for each input device
+    [ ] Input file windows for each loaded file on card or disk
+        w/pointer to last read record
+    [ ] Device output windows:
+        [ ] 5471 console dialog w/REQ & PROCEED indicators
+        [ ] Printer
+        [ ] Card window for each hopper
+        [ ] Disk for each output file
+[ ] Resizable, moveable, dockable windows, VS-style
+    [ ] Get example from "WPF 4.5 Unleashed" working
+    [ ] Download & try out Rich Editor projects
+        [ ] Add code to selectively change font, font size, font color & background color
+[ ] Ability to define variables: name, location, length, start/stop
+[ ] Support conditional breakpoints
+[ ] Persist breakpoints for future sessions
+
+===================================================================================================
+Visual Stufio interface
+- Main window / resizable panes above & below
+   > DASM / debugger window
+   > Output windows (printer, card, disk, 5471 w/color setting for user input & system output) text or hex w/ & w/o test
+- Panes on left
+   > Register values
+   > Halt display (7-segment font, 14-segment font, or graphically generated image)
+   > 5475 display (7-segment font, 14-segment font, or graphically generated image)
+   > Option settings (which windows to show, stop on halt, 5475 panel switches, show breakoints, enable/disable all breakpoints)
+- Panes below
+   > Breakpoints list (persist)
+   > All main memory w/navigation to specific locations
+   > Watch windows
+   > Auto variable window for only locations that changed
+- Persist UI settings & layout (allow saving workspace layouts & file/breakpoint values for different sessions)
