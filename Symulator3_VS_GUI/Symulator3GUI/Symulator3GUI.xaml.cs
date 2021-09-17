@@ -638,6 +638,17 @@ namespace Symulator3GUI
                                                                                 x_cdbxDisassemblyOutput.Focus (); }));
             }
         }
+
+        public void OnIPLProgramSize (object sender, NewProgramSizeEventArgs e)
+        {
+            lock (m_objEmulatorEngine.m_objLock)
+            {
+                //Console.WriteLine ("New Program State: {0}", e.NewProgramState);
+
+                Application.Current.Dispatcher.BeginInvoke (System.Windows.Threading.DispatcherPriority.Background,
+                                                            new Action (() => x_lblProgramSize.Content = e.ProgramSize));
+            }
+        }
         #endregion
 
         private void ManageNewCR (byte yNewCR, bool bSystemReset = false)
@@ -798,6 +809,7 @@ namespace Symulator3GUI
             m_objEmulatorEngine.OnNewCPUDials               += OnNewCPUDials;
             m_objEmulatorEngine.OnNewEnableHighlightLine    += OnNewEnableHighlightLine;
             m_objEmulatorEngine.OnNewDisassemblyListing     += OnNewDisassemblyListing;
+            m_objEmulatorEngine.OnIPLProgramSize            += OnIPLProgramSize;
 
             LoadStateSettings ();
 
@@ -2092,6 +2104,24 @@ namespace Symulator3GUI
         // Show Pane 2 when hovering over its button
         public void OnMouseEnterPane2PrinterOutputTab (object sender, RoutedEventArgs e) // Printer Output
         {
+            DoShowPrinterOutput ();
+
+            //x_gridLayer2PrinterOutput.Visibility = Visibility.Visible;
+
+            //// Adjust Z order to ensure the pane is on top:
+            //x_gridParent.Children.Remove (x_gridLayer2PrinterOutput);
+            //x_gridParent.Children.Add (x_gridLayer2PrinterOutput);
+
+            //// Ensure the other pane is hidden if it is undocked
+            //if (x_btnPane2TraceOutput.Visibility == Visibility.Visible)
+            //    x_gridLayer1TraceOutput.Visibility = Visibility.Collapsed;
+
+            //if (x_btnPane3TreeViewDB.Visibility == Visibility.Visible)
+            //    x_gridLayer3TreeViewDB.Visibility = Visibility.Collapsed;
+        }
+
+        private void DoShowPrinterOutput ()
+        {
             x_gridLayer2PrinterOutput.Visibility = Visibility.Visible;
 
             // Adjust Z order to ensure the pane is on top:
@@ -2345,23 +2375,38 @@ namespace Symulator3GUI
                 string strSelected = "Selected: " + tvDataBase.SelectedItem.ToString ();
             }
 
-            x_lblProgramName.Content = m_strItemName;
+            x_lblProgramName.Content      = m_strItemName;
+            x_lblProgramCardCount.Content = "";
+            x_lblProgramSize.Content      = "";
             int iRecordCount = 0;
+            int iProgramSize = 0;
+
+            m_objEmulatorEngine.m_objPrintQueue.Clear ();
+            m_objEmulatorEngine.FireClearPrinterPanelEvent ();
+            UndockPane (2);
 
             if (m_strTableName == "CardData") // Print to PrinterOutput
             {
+                DockPane (2);
+                DoShowPrinterOutput ();
+
                 OutputListLine ("  Table: " + m_strTableName + "  File: " + m_strItemName + "  Token: " + m_strTokenName);
                 m_strPrinterOutputFilename = MakeNewPrinterOutputFilename (m_strItemName);
                 List<string> lstrCardData = m_objEmulatorEngine.ReadCardFileToStringList (EDatabaseTable.TABLE_CardData, "", m_strItemName);
                 iRecordCount = lstrCardData.Count;
+                iProgramSize = iRecordCount * 96;
                 OutputListLines (lstrCardData, true);
             }
             else if (m_strTableName == "CardRPGiiSource") // Print to PrinterOutput
             {
+                DockPane (2);
+                DoShowPrinterOutput ();
+
                 OutputListLine ("  Table: " + m_strTableName + "  File: " + m_strItemName + "  Token: " + m_strTokenName);
                 m_strPrinterOutputFilename = MakeNewPrinterOutputFilename (m_strItemName);
                 List<string> lstrCardRPGiiSource = m_objEmulatorEngine.ReadCardFileToStringList (EDatabaseTable.TABLE_CardRPGiiSource, "", m_strItemName);
                 iRecordCount = lstrCardRPGiiSource.Count;
+                iProgramSize = iRecordCount * 96;
                 OutputListLines (lstrCardRPGiiSource, true);
             }
             else if (m_strTableName == "ScriptingMacros") // Print to PrinterOutput
@@ -2370,6 +2415,9 @@ namespace Symulator3GUI
                 m_strPrinterOutputFilename = MakeNewPrinterOutputFilename (m_strItemName);
                 List<string> lstrScriptingMacros = m_objEmulatorEngine.ReadScriptDataToStringList (EDatabaseTable.TABLE_ScriptingMacros, "", m_strItemName);
                 iRecordCount = lstrScriptingMacros.Count;
+                iProgramSize = iRecordCount * 96;
+                ///x_lblProgramCardCount.Content = iRecordCount.ToString ();
+                ///x_lblProgramSize.Content = iProgramSize.ToString ();
                 OutputListLines (lstrScriptingMacros, true);
             }
             else if (m_strTableName == "SavedScripts") // Print to PrinterOutput
@@ -2378,6 +2426,9 @@ namespace Symulator3GUI
                 m_strPrinterOutputFilename = MakeNewPrinterOutputFilename (m_strItemName);
                 List<string> lstrSavedScripts = m_objEmulatorEngine.ReadScriptDataToStringList (EDatabaseTable.TABLE_SavedScripts, "", m_strItemName);
                 iRecordCount = lstrSavedScripts.Count;
+                iProgramSize = iRecordCount * 96;
+                ///x_lblProgramCardCount.Content = iRecordCount.ToString ();
+                ///x_lblProgramSize.Content = iProgramSize.ToString ();
                 OutputListLines (lstrSavedScripts, true);
             }
             else if (m_strTableName == "CardObjectIPL") // Load & DASM
@@ -2386,6 +2437,9 @@ namespace Symulator3GUI
                 OutputListLine ("  Table: " + m_strTableName + "  File: " + m_strItemName + "  Token: " + m_strTokenName);
                 m_strDasmOutputFilename = MakeNewDasmOutputFilename (m_strItemName);
                 m_strPrinterOutputFilename = MakeNewPrinterOutputFilename (m_strItemName);
+                List<string> lstrCardObjectIPL = m_objEmulatorEngine.ReadCardFileToStringList (EDatabaseTable.TABLE_CardObjectIPL, "", m_strItemName);
+                iRecordCount = lstrCardObjectIPL.Count;
+                x_lblProgramCardCount.Content = iRecordCount.ToString ();
 
                 m_objEmulatorEngine.ResetTestOneCardClockProgram ();
                 m_objEmulatorEngine.ResetPrintNonAscii ();
@@ -2409,11 +2463,17 @@ namespace Symulator3GUI
                 //}
 
                 iRecordCount = m_objEmulatorEngine.ProgramLoadDB (m_strTokenName, "", false, false);
+                ///x_lblProgramCardCount.Content = iRecordCount.ToString ();
                 m_objEmulatorEngine.SetIPLCardCount (iRecordCount);
                 if (iRecordCount > 1)
                 {
                     m_objEmulatorEngine.SetUIRunMode (CEmulatorEngine.EUIRunMode.RUN_LoadFromIPL);
                 }
+                //else
+                //{
+                //    iProgramSize = 64;
+                //    ///x_lblProgramSize.Content = iProgramSize.ToString ();
+                //}
 
                 InitializeDisASMPanel ();
                 m_strTraceOutputFilename = MakeNewTraceOutputFilename (m_strItemName);
@@ -2427,6 +2487,8 @@ namespace Symulator3GUI
                     return;
                 }
 
+                //x_lblProgramSize.Content = (iRecordCount * 64).ToString ();
+                iProgramSize = iRecordCount * 64;
                 m_objEmulatorEngine.SetHeaderProgrmaName (PrepProgramName (m_strItemName, false));
                 m_lstrDisASM = m_objEmulatorEngine.DisassembleCodeImage ();
                 m_objEmulatorEngine.FireNewDASMStringListEvent (m_lstrDisASM);
@@ -2442,6 +2504,8 @@ namespace Symulator3GUI
                 OutputListLine ("  Table: " + m_strTableName + "  File: " + m_strItemName + "  Token: " + m_strTokenName);
                 m_strDasmOutputFilename = MakeNewDasmOutputFilename (m_strItemName);
                 m_strPrinterOutputFilename = MakeNewPrinterOutputFilename (m_strItemName);
+                List<string> lstrCardObjectText = m_objEmulatorEngine.ReadCardFileToStringList (EDatabaseTable.TABLE_CardObjectText, "", m_strItemName);
+                iProgramSize = m_objEmulatorEngine.GetProgramSizeText (lstrCardObjectText);
 
                 if (m_strItemName == "BLCK" || // 45  EC entry: 0x0000  (0x0300)      Run   Block-Letter Printer                 Primary hopper    CardData:"IBM Set"
                     m_strItemName == "HXPL" || // 23  EC entry: 0x0000  (0x0600)      Run   Hexadecimal to IPL-Punch Program     Primary hopper    CardData:"HXPL Test Input"
@@ -2512,6 +2576,9 @@ namespace Symulator3GUI
                     m_objEmulatorEngine.m_objPrintQueue.Clear ();
                     m_objEmulatorEngine.FireClearPrinterPanelEvent ();
 
+                    DockPane (2);
+                    DoShowPrinterOutput ();
+
                     m_objEmulatorEngine.m_objEmulatorState.SetRunState (CEmulatorState.ERunMode.RUN_FreeRun);
                     iRecordCount = m_objEmulatorEngine.ProgramLoadDB (m_strTokenName);
                 }
@@ -2522,6 +2589,8 @@ namespace Symulator3GUI
                     //  HeaderDump 44
                     //  IPLCardDump 45
                 }
+
+                x_lblProgramSize.Content = iProgramSize.ToString ();
             }
             else if (m_strTableName == "DiskCreatedImages") // Load only
             {
@@ -2533,6 +2602,7 @@ namespace Symulator3GUI
             }
 
             x_lblProgramCardCount.Content = iRecordCount.ToString ();
+            x_lblProgramSize.Content = iProgramSize.ToString ();
         }
 
         // Select TreeView Node on right click before displaying ContextMenu
@@ -3323,11 +3393,11 @@ namespace Symulator3GUI
         {
             if (m_objEmulatorEngine.GetTestOneCardClockProgram ())
             {
-                x_lblProcessorSpeed.Content = "Effective System/3 clock speed: 657.895Hz (clock)";
+                x_lblProcessorSpeed.Content = "Effective System/3 clock speed: 657.895kHz (clock)";
             }
             else if (m_objEmulatorEngine.GetSimulateSystem3CpuTiming ())
             {
-                x_lblProcessorSpeed.Content = "Effective System/3 clock speed: 657.895Hz (sim)";
+                x_lblProcessorSpeed.Content = "Effective System/3 clock speed: 657.895kHz (sim)";
             }
             else
             {

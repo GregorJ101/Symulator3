@@ -70,7 +70,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="40"/>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="210"/>
                             <ColumnDefinition Width="Auto"/>
@@ -146,7 +146,7 @@
             <MenuItem Header="TEST"   Background="PapayaWhip"/>
             <MenuItem Header="WINDOW" Background="PapayaWhip"/>-->
             <MenuItem Header="HELP"   Background="PapayaWhip">
-                <MenuItem Header="ShowAboutBox" Command="Local:CCustomCommands.ShowAboutBox" Background="AntiqueWhite"/>
+                <MenuItem Header="About Symulator/3" Command="Local:CCustomCommands.ShowAboutBox" Background="AntiqueWhite"/>
             </MenuItem>
         </Menu>
 
