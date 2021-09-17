@@ -240,6 +240,13 @@ namespace EmulatorEngine
         public string ProcessorCheck2 { get; set; }
     }
 
+    public class NewProgramSizeEventArgs : EventArgs
+    {
+        public NewProgramSizeEventArgs (int iProgramSize)
+        { ProgramSize = iProgramSize; }
+        public int ProgramSize { get; set; }
+    }
+
     //public class ResetControlColorsEventArgs : EventArgs { }
     #endregion
 
@@ -1113,6 +1120,7 @@ namespace EmulatorEngine
         protected int    m_iNewDASMEntryPoint     = 0x0000;
         protected int    m_iIPLCardCount          = 0;
         protected int    m_iIPLCardReadCount      = 0;
+        protected int    m_iProgramSizeIPL        = 0;
         protected bool   m_bIsAbsoluteCardLoader  = false;
         protected bool   m_bRunAfterDASM          = true;
         protected bool   m_bLoadingComplete       = false;
@@ -1146,10 +1154,9 @@ namespace EmulatorEngine
              m_iDasmEndAddress     = 0x0000;
         }
 
-        public void SetIPLCardCount (int iIPLCardCount)
-        {
-            m_iIPLCardCount = iIPLCardCount;
-        }
+        public int  GetProgramSizeIPL () { return m_iProgramSizeIPL; }
+
+        public void SetIPLCardCount (int iIPLCardCount) { m_iIPLCardCount = iIPLCardCount; }
 
         public bool IsAbsoluteCardLoader ()
         {
@@ -2138,6 +2145,17 @@ namespace EmulatorEngine
                 OnNewDisassemblyListing?.Invoke (this, new NewDisassemblyEventArgs (iBeginDasmAddress, iEndDasmAddress, iDasmEntryPoint, iXR1, iXR2));
             }
         }
+
+        public void FireIPLProgramSizeEvent (int iProgramSize)
+        {
+            if (m_bAsyncRun)
+            {
+                lock (m_objLock)
+                {
+                    OnIPLProgramSize?.Invoke (this, new NewProgramSizeEventArgs (iProgramSize));
+                }
+            }
+        }
         #endregion
 
         #region System Initialization
@@ -2238,6 +2256,7 @@ namespace EmulatorEngine
         public event EventHandler<NewProgramStateEventArgs>        OnNewProgramState;
         public event EventHandler<NewProcessorCheck1EventArgs>     OnNewProcessorCheck1;
         public event EventHandler<NewProcessorCheck2EventArgs>     OnNewProcessorCheck2;
+        public event EventHandler<NewProgramSizeEventArgs>         OnIPLProgramSize;
         public event EventHandler<EventArgs>                       OnClearPrintOutputPanel;
         public event EventHandler<EventArgs>                       OnClearGrayedLinesList;
         public event EventHandler<EventArgs>                       OnResetControlColors;
@@ -2660,6 +2679,8 @@ namespace EmulatorEngine
 
             ETokenType ettOne = ftOne.GetTokenType ();
             ETokenType ettTwo = (ftTwo == null) ? ETokenType.TOKEN_Invalid : ftTwo.GetTokenType ();
+
+            m_iProgramSizeIPL = 0;
 
             //Primary must be TOKEN_CardBinary or TOKEN_DiskBinary
             if (ettOne != ETokenType.TOKEN_CardBinary &&
@@ -4724,6 +4745,13 @@ namespace EmulatorEngine
                     //m_iNewDASMEntryPoint     = 0x0000;
                 }
 
+                if (m_eUIRunMode == EUIRunMode.RUN_LoadFromIPL &&
+                    m_iIPLCardCount    > 1                     &&
+                    iOperandOneAddress > CARD_IMAGE_IPL_SIZE)
+                {
+                    m_iProgramSizeIPL += iOffset;
+                }
+
                 while (iOffset-- > 0)
                 {
                     m_yaMainMemory[iOperandOneAddress--] = m_yaMainMemory[iOperandTwoAddress--];
@@ -5458,6 +5486,7 @@ namespace EmulatorEngine
                 m_iNewEndDASMAddress   = 0x0000;
                 m_iNewDASMEntryPoint   = 0x0000;
                 FireNewDisassemblyListingEvent (m_iOldStartDASMAddress, m_iOldEndDASMAddress, m_iOldDASMEntryPoint, m_iXR1, m_iXR2);
+                //FireIPLProgramSizeEvent (m_iProgramSizeIPL);
             }
 
             // Disassembly for AbsoluteCareLoader
@@ -5469,6 +5498,7 @@ namespace EmulatorEngine
                 m_iOldEndDASMAddress   = 0x00FF;
                 m_iOldDASMEntryPoint   = m_iaIAR[m_iIL];
                 FireNewDisassemblyListingEvent (m_iOldStartDASMAddress, m_iOldEndDASMAddress, m_iOldDASMEntryPoint, m_iXR1, m_iXR2);
+                FireIPLProgramSizeEvent (m_iProgramSizeIPL);
             }
 
             // Disassemble text program body

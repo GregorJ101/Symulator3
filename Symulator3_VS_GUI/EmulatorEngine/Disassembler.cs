@@ -802,8 +802,9 @@ namespace EmulatorEngine
                 iOldFirstInstruction = iNewFirstInstruction;
                 m_iObjectCodeIdx     = iLowAddress;
 
-                m_sdDisassemblyLineIndexes.Clear ();
-                m_strlDisassemblyLines.Clear ();
+                // Fixed issue: DASM output not showing in DASM window when program loaded
+                //m_sdDisassemblyLineIndexes.Clear ();
+                //m_strlDisassemblyLines.Clear ();
                 m_bHeaderLinesAdded = false;
 
                 ////while (m_iObjectCodeIdx <= iHighAddress &&

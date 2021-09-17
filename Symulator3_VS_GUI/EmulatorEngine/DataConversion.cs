@@ -613,6 +613,25 @@ namespace EmulatorEngine
             }
             return yaReturn;
         }
+
+        public int GetProgramSizeText (List<string> strlTextFile)
+        {
+            int iProgramSize = 0;
+
+            if (strlTextFile.Count > 0)
+            {
+                foreach (string str in strlTextFile)
+                {
+                    if (str[0] == 'T')
+                    {
+                        byte[] yaTextBinary = ReadTextCard (str);
+                        iProgramSize += yaTextBinary[0] + 1;
+                    }
+                }
+            }
+
+            return iProgramSize;
+        }
         #endregion
 
         // Text Card Loading member data
